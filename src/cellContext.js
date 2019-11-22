@@ -1,5 +1,5 @@
-import { createContext } from 'react'
+import { createContext } from 'react';
 
-const CellContext = createContext(null)
+const CellContext = createContext(null);
 
-export { CellContext }
+export { CellContext };
