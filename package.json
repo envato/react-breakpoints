@@ -1,0 +1,47 @@
+{
+  "name": "@envato/react-breakpoints-hook",
+  "version": "0.1.0",
+  "description": "Respond to changes in width and height of the nearest React context.",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "unpkg": "dist/index.umd.js",
+  "source": "index.js",
+  "scripts": {
+    "build": "microbundle",
+    "dev": "microbundle watch",
+    "prepare": "npm run build",
+    "test": "jest",
+    "test:coverage": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/envato/react-breakpoints-hook.git"
+  },
+  "keywords": [
+    "react-hooks",
+    "hooks",
+    "react",
+    "performance",
+    "resize-observer",
+    "breakpoints",
+    "media-queries"
+  ],
+  "author": "Envato",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/envato/react-breakpoints-hook/issues"
+  },
+  "homepage": "https://github.com/envato/react-breakpoints-hook#readme",
+  "peerDependencies": {
+    "react": "^16.8.0"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.7.1",
+    "@testing-library/react-hooks": "^3.2.1",
+    "jest": "^24.9.0",
+    "microbundle": "^0.11.0",
+    "react": "^16.12.0",
+    "react-test-renderer": "^16.12.0",
+    "rollup": "^0.68.2"
+  }
+}
