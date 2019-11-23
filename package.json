@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Respond to changes in width and height of the nearest React context.",
   "main": "dist/index.js",
-  "module": "dist/index.mjs",
+  "module": "dist/index.module.js",
   "unpkg": "dist/index.umd.js",
   "source": "index.js",
   "scripts": {
