@@ -38,6 +38,7 @@
   "devDependencies": {
     "@babel/preset-env": "^7.7.1",
     "@testing-library/react-hooks": "^3.2.1",
+    "@types/react": "^16.9.14",
     "jest": "^24.9.0",
     "microbundle": "^0.11.0",
     "react": "^16.12.0",
