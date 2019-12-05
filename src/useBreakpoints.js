@@ -8,17 +8,17 @@ const boxOptions = {
 };
 
 /**
- * Find the breakpoint matching the given cell size.
+ * Find the breakpoint matching the given entry size.
  * @param {Object} breakpoints - Map of sizes with their return values.
- * @param {Number} cellSize - Size of cell to check breakpoints against.
+ * @param {Number} entrySize - Size of entry to check breakpoints against.
  * @returns {*} Value of `breakpoints` at matching breakpoint.
  */
-const findBreakpoint = (breakpoints, cellSize) => {
+const findBreakpoint = (breakpoints, entrySize) => {
   let breakpoint;
   const sizes = Object.keys(breakpoints);
 
   for (const next of sizes) {
-    if (cellSize < Number(next)) break;
+    if (entrySize < Number(next)) break;
     breakpoint = next;
   }
 
@@ -27,15 +27,17 @@ const findBreakpoint = (breakpoints, cellSize) => {
 
 /**
  * Returns mapped value for width and height of nearest Context.
- * @param {Object} widthMap - Map of widths and their return values.
- * @param {Object} heightMap - Map of heights and their return values.
- * @returns {Array} Array of matching width breakpoint, and matching height breakpoint.
+ * @param {Object} options
+ * @param {Object} [options.widths] - Map of minWidths and their return values.
+ * @param {Object} [options.heights] - Map of minHeights and their return values.
+ * @param {String} [options.box] - Name of observed box you want to match your breakpoints against. One of ['border-box', 'content-box', 'device-pixel-content-box'].
+ * @returns {Array} Array of matching width value, and matching height value.
  */
 const useBreakpoints = ({
   widths = {},
   heights = {},
   box = undefined
-} = {}) => {
+}) => {
   const resizeObserverEntry = useResizeObserverEntry();
 
   /**
