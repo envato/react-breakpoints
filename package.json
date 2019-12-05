@@ -3,15 +3,9 @@
   "version": "0.1.1",
   "description": "Respond to changes in width and height of the nearest React context.",
   "main": "dist/index.js",
-  "module": "dist/index.module.js",
-  "unpkg": "dist/index.umd.js",
-  "source": "index.js",
   "scripts": {
-    "build": "microbundle",
-    "dev": "microbundle watch",
-    "prepare": "npm run build",
-    "test": "jest",
-    "test:coverage": "jest --coverage"
+    "build": "babel index.js src/ -d dist --source-maps",
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -33,15 +27,16 @@
   },
   "homepage": "https://github.com/envato/react-breakpoints-hook#readme",
   "peerDependencies": {
-    "react": "^16.8.0"
+    "react": "^16.8.0",
+    "react-dom": "^16.12.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.7.4",
+    "@babel/core": "^7.7.4",
     "@babel/preset-env": "^7.7.1",
-    "@testing-library/react-hooks": "^3.2.1",
-    "jest": "^24.9.0",
-    "microbundle": "^0.11.0",
+    "@babel/preset-react": "^7.7.4",
+    "babel-preset-minify": "^0.5.1",
     "react": "^16.12.0",
-    "react-test-renderer": "^16.12.0",
-    "rollup": "^0.68.2"
+    "react-dom": "^16.12.0"
   }
 }
