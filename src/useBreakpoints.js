@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from 'react';
-import { CellContext } from './cellContext';
+import { Context } from './Context';
 
 /**
  * Find the breakpoint matching the given cell size.
@@ -20,13 +20,13 @@ const findBreakpoint = (breakpoints, cellSize) => {
 };
 
 /**
- * Returns mapped value for width and height of nearest CellContext.
+ * Returns mapped value for width and height of nearest Context.
  * @param {Object} widthMap - Map of widths and their return values.
  * @param {Object} heightMap - Map of heights and their return values.
  * @returns {Array} Array of matching width breakpoint, and matching height breakpoint.
  */
 const useBreakpoints = (widthMap = {}, heightMap = {}) => {
-  const [cellWidth, cellHeight] = useContext(CellContext);
+  const [cellWidth, cellHeight] = useContext(Context);
 
   const [width, setWidth] = useState(findBreakpoint(widthMap, cellWidth));
   const [height, setHeight] = useState(findBreakpoint(heightMap, cellHeight));
