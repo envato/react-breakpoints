@@ -1,7 +1,7 @@
 {
-  "name": "@envato/react-breakpoints-hook",
-  "version": "0.1.1",
-  "description": "Respond to changes in width and height of the nearest React context.",
+  "name": "@envato/react-breakpoints",
+  "version": "0.2.0",
+  "description": "Respond to changes in a parent DOM element's size.",
   "main": "dist/index.js",
   "scripts": {
     "build": "babel index.js src/ -d dist --source-maps",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/envato/react-breakpoints-hook.git"
+    "url": "git+https://github.com/envato/react-breakpoints.git"
   },
   "keywords": [
     "react-hooks",
@@ -23,9 +23,9 @@
   "author": "Envato",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/envato/react-breakpoints-hook/issues"
+    "url": "https://github.com/envato/react-breakpoints/issues"
   },
-  "homepage": "https://github.com/envato/react-breakpoints-hook#readme",
+  "homepage": "https://github.com/envato/react-breakpoints#readme",
   "peerDependencies": {
     "react": "^16.8.0",
     "react-dom": "^16.12.0"
