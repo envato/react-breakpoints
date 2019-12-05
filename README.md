@@ -1,11 +1,17 @@
-# React Breakpoints Hook &middot; [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](CODE-OF-CONDUCT.md)
+# React Breakpoints &middot; [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](CODE-OF-CONDUCT.md)
 
-> Respond to changes in width and height of the nearest React context.
+> Respond to changes in a parent DOM element's size.
 
 This package provides you with:
 
-* a React Hook (`useBreakpoints`) to change a components behaviour based on the width and height of its nearest `CellContext`;
-* a React Context (`CellContext`) on which you can assign a `[width, height]` value to trigger any nested components with `useBreakpoints`.
+* a `Provider` to instantiate the ResizeObserver;
+* an `<Observe />` component to detect changes in an observed DOM element;
+* a `useBreakpoints` hook to change a child component's behaviour based on the width and height of the nearest parent `<Observe />`.
+
+For power users it also provides:
+* a `useResizeObserver` hook, which is documented at [@envato/react-resize-observer-hook](https://github.com/envato/react-resize-observer-hook);
+* a `Context` on which you can assign a `ResizeObserverEntry` value to trigger any nested components that are using `useBreakpoints`;
+* a `useResizeObserverEntry` hook to retrieve the `ResizeObserverEntry` put on the nearest `Context`. This is what `useBreakpoints` uses under the hood.
 
 This allows you to change the evaluated logic and rendered output of a component. For example, you can change a dropdown menu to a horizontal list menu based on its parent container's width without using CSS media queries.
 
@@ -16,13 +22,27 @@ While this package has seen little action "in the wild", it has first been devel
 # Usage
 
 ```shell
-npm install --save @envato/react-breakpoints-hook
+npm install --save @envato/react-breakpoints
 ```
+
+## Set up the Provider
+
+```javascript
+import { Provider as ResizeObserverProvider } from '@envato/react-breakpoints';
+
+const App = () => (
+  <ResizeObserverProvider>
+    ...
+  </ResizeObserverProvider>
+)
+```
+
+**Caution**: By default, `Provider` instantiates a `window.ResizeObserver`. [`window.ResizeObserver` currently has weak browser support](https://caniuse.com/#feat=mdn-api_resizeobserver_resizeobserver). See [@envato/react-resize-observer-hook](https://github.com/envato/react-resize-observer-hook) for more information.
 
 ## Observe an element
 
 ```javascript
-import { Observe } from '@envato/react-breakpoints-hook';
+import { Observe } from '@envato/react-breakpoints';
 
 <Observe
   render={({ observedElementProps }) => (
@@ -36,7 +56,7 @@ import { Observe } from '@envato/react-breakpoints-hook';
 ## Set breakpoints on a child component
 
 ```javascript
-import { useBreakpoints } from '@envato/react-breakpoints-hook';
+import { useBreakpoints } from '@envato/react-breakpoints';
 
 const MyResponsiveComponent = () => {
   const options = {

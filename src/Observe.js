@@ -12,4 +12,4 @@ const Observe = ({ render }) => {
   );
 };
 
-export default Observe;
+export { Observe };
