@@ -22,7 +22,7 @@ While this package has seen little action "in the wild", it has first been devel
 # Usage
 
 ```shell
-npm install --save @envato/react-breakpoints
+npm install @envato/react-breakpoints
 ```
 
 ## Set up the Provider
