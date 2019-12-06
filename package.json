@@ -1,10 +1,10 @@
 {
   "name": "@envato/react-breakpoints",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Respond to changes in a parent DOM element's size.",
   "main": "dist/index.js",
   "scripts": {
-    "build": "babel index.js src/ -d dist --source-maps",
+    "build": "babel src/ -d dist --source-maps",
     "prepare": "npm run build"
   },
   "repository": {
