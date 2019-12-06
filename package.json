@@ -1,14 +1,14 @@
 {
   "name": "@envato/react-breakpoints",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "Respond to changes in a parent DOM element's size.",
   "main": "dist/index.js",
   "module": "dist/index.module.js",
   "unpkg": "dist/index.umd.js",
   "source": "index.js",
   "scripts": {
-    "build": "microbundle",
-    "dev": "microbundle watch",
+    "build": "microbundle --jsx React.createElement",
+    "dev": "microbundle watch --jsx React.createElement",
     "prepare": "npm run build"
   },
   "repository": {
@@ -41,6 +41,6 @@
     "react-dom": "^16.12.0"
   },
   "dependencies": {
-    "@envato/react-resize-observer-hook": "^0.1.6"
+    "@envato/react-resize-observer-hook": "^0.1.7"
   }
 }
