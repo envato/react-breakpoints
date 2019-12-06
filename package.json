@@ -1,6 +1,6 @@
 {
   "name": "@envato/react-breakpoints",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Respond to changes in a parent DOM element's size.",
   "main": "dist/index.js",
   "scripts": {
