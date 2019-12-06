@@ -1,10 +1,14 @@
 {
   "name": "@envato/react-breakpoints",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Respond to changes in a parent DOM element's size.",
   "main": "dist/index.js",
+  "module": "dist/index.module.js",
+  "unpkg": "dist/index.umd.js",
+  "source": "index.js",
   "scripts": {
-    "build": "babel src/ -d dist --source-maps",
+    "build": "microbundle",
+    "dev": "microbundle watch",
     "prepare": "npm run build"
   },
   "repository": {
@@ -31,11 +35,8 @@
     "react-dom": "^16.12.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.4",
-    "@babel/core": "^7.7.4",
     "@babel/preset-env": "^7.7.4",
-    "@babel/preset-react": "^7.7.4",
-    "babel-preset-minify": "^0.5.1",
+    "microbundle": "^0.11.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
   },
