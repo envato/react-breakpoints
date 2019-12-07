@@ -6,7 +6,7 @@ import { Context } from './Context';
  * @returns {(ResizeObserverEntry|null)}
  */
 const useResizeObserverEntry = () => {
-  const [resizeObserverEntry] = useContext(Context);
+  const resizeObserverEntry = useContext(Context);
 
   return resizeObserverEntry;
 };
