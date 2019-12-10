@@ -12,6 +12,8 @@ Advanced usage:
 * [`useResizeObserver()`](#useresizeobserver)
 * [`useResizeObserverEntry()`](#useresizeobserverentry)
 
+---
+
 # `<Provider>`
 
 Your app must include a `<Provider>`. It creates a React context with a `ResizeObserver` instance as its value. This allows components nested under `<Provider>` to be observed for changes in size.
@@ -41,6 +43,8 @@ const App = () => (
   </ResizeObserverProvider>
 );
 ```
+
+---
 
 # `<Observe>`
 
@@ -89,6 +93,8 @@ import { Observe } from '@envato/react-breakpoints';
   )}
 />
 ```
+
+---
 
 # `useBreakpoints()`
 
@@ -239,6 +245,8 @@ const MyResponsiveComponent = () => {
 };
 ```
 
+---
+
 # `<Context>`
 
 ⚠️ **Advanced usage** — This React context is used internally by [`useBreakpoints()`](#usebreakpoints). You may use this context with `React.useContext()` to access the information stored in the context provider, which is typically a `ResizeObserverEntry` set internally by [`<Observe>`](#observe).
@@ -272,6 +280,8 @@ const MyChildComponent = () => {
 ```
 
 ⚠️ **Hint**: Instead of manually implementing the `child.js` portion as above, you may want to use [`useResizeObserverEntry()`](#useresizeobserverentry) instead.
+
+---
 
 # `useResizeObserver()`
 
@@ -328,6 +338,8 @@ const MyObserverComponent = () => {
 ```
 
 ⚠️ **Hint**: This is for when you really need advanced behaviour. This is completely abstracted away for your convenience by [`<Observe>`](#observe).
+
+---
 
 # `useResizeObserverEntry()`
 
