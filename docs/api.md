@@ -35,7 +35,7 @@ Your app must include a `<Provider>`. It creates a React context with a `ResizeO
 
 ```javascript
 import { Provider as ResizeObserverProvider } from '@envato/react-breakpoints';
-import ResizeObserver from '@juggle/resize-observer'; // Ponyfill
+import { ResizeObserver } from '@juggle/resize-observer'; // Ponyfill
 
 const App = () => (
   <ResizeObserverProvider ponyfill={ResizeObserver}>
