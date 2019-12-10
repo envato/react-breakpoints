@@ -215,6 +215,30 @@ This library supports the following `box` options (but your browser may not!):
 
 If `box` is left `undefined` or set to any value other than those listed above, `useBreakpoints()` will default to returning information from `ResizeObserverEntry.contentRect`.
 
+## Usage
+
+```javascript
+import { useBreakpoints } from '@envato/react-breakpoints';
+
+const MyResponsiveComponent = () => {
+  const options = {
+    widths: {
+      0: 'mobile',
+      769: 'tablet',
+      1025: 'desktop'
+    }
+  };
+
+  const [label] = useBreakpoints(options);
+
+  return (
+    <div className={label}>
+      This element is currently within the {label} range.
+    </div>
+  );
+};
+```
+
 # `<Context>`
 
 ⚠️ **Advanced usage** — This React context is used internally by [`useBreakpoints()`](#usebreakpoints). You may use this context with `React.useContext()` to access the information stored in the context provider, which is typically a `ResizeObserverEntry` set internally by [`<Observe>`](#observe).
