@@ -39,7 +39,7 @@ const App = () => (
 )
 ```
 
-⚠️ **Caution**: You may need to provide some props to `<Provider>` to increase browser support. Please refer to the [API Docs](/docs/api.md).
+⚠️ **Caution**: You may need to provide some props to `<Provider>` to increase browser support. Please refer to the [API Docs](/docs/api.md#provider).
 
 ## Observe an element
 
