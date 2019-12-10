@@ -1,12 +1,12 @@
 # React Breakpoints &middot; [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](CODE-OF-CONDUCT.md)
 
-> Respond to changes in a parent DOM element's size.
+> Respond to changes in a DOM element's size.
 
 This package provides you with:
 
 * a [`<Provider>`](/docs/api.md#provider) to instantiate the ResizeObserver;
 * an [`<Observe>`](/docs/api.md#observe) component to detect changes in an observed DOM element;
-* a [`useBreakpoints()`](/docs/api.md#usebreakpoints) hook to change a child component's behaviour based on the width and height of the nearest parent `<Observe />`.
+* a [`useBreakpoints()`](/docs/api.md#usebreakpoints) hook to change a child component's behaviour based on the width and height of the nearest parent `<Observe>`.
 
 For power users it also provides:
 * a [`<Context>`](/docs/api.md#context) on which you can assign a `ResizeObserverEntry` value to trigger any nested components that are using `useBreakpoints()`;
@@ -39,7 +39,7 @@ const App = () => (
 )
 ```
 
-**Caution**: You may need to provide some props to `Provider` to increase browser support. Please refer to the [API Docs](/docs/api.md).
+**Caution**: You may need to provide some props to `<Provider>` to increase browser support. Please refer to the [API Docs](/docs/api.md).
 
 ## Observe an element
 
