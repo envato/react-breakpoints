@@ -275,7 +275,7 @@ const MyChildComponent = () => {
 
 # `useResizeObserver()`
 
-This hook is used internally in [`<Observe>`](#observe) to retrieve the `ResizeObserver` instance set by [`<Provider>`](#provider). It allows you to call [its methods](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver), most notably `.observe()` and `.unobserve()`. This hook takes no arguments.
+⚠️ **Advanced usage** — This hook is used internally in [`<Observe>`](#observe) to retrieve the `ResizeObserver` instance set by [`<Provider>`](#provider). It allows you to call [its methods](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver), most notably `.observe()` and `.unobserve()`. This hook takes no arguments.
 
 ## Reference guide
 
@@ -331,7 +331,7 @@ const MyObserverComponent = () => {
 
 # `useResizeObserverEntry()`
 
-This hook is used internally in [`useBreakpoints()`](#usebreakpoints) to retrieve the `ResizeObserverEntry` instance set by [`<Observe>`](#observe). It allows you to manually extract [its properties](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserverEntry), most notably `.borderBoxSize`, `.contentBoxSize`, and `.devicePixelContentBoxSize`. This hook takes no arguments.
+⚠️ **Advanced usage** — This hook is used internally in [`useBreakpoints()`](#usebreakpoints) to retrieve the `ResizeObserverEntry` instance set by [`<Observe>`](#observe). It allows you to manually extract [its properties](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserverEntry), most notably `.borderBoxSize`, `.contentBoxSize`, and `.devicePixelContentBoxSize`. This hook takes no arguments.
 
 ## Reference guide
 
