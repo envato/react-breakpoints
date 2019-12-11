@@ -1,11 +1,17 @@
-# React Breakpoints Hook &middot; [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](CODE-OF-CONDUCT.md)
+# React Breakpoints &middot; [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](CODE-OF-CONDUCT.md)
 
-> Respond to changes in width and height of the nearest React context.
+> Respond to changes in a DOM element's size.
 
 This package provides you with:
 
-* a React Hook (`useBreakpoints`) to change a components behaviour based on the width and height of its nearest `CellContext`;
-* a React Context (`CellContext`) on which you can assign a `[width, height]` value to trigger any nested components with `useBreakpoints`.
+* a [`<Provider>`](/docs/api.md#provider) to instantiate the ResizeObserver;
+* an [`<Observe>`](/docs/api.md#observe) component to detect changes in an observed DOM element;
+* a [`useBreakpoints()`](/docs/api.md#usebreakpoints) hook to change a child component's behaviour based on the width and height of the nearest parent `<Observe>`.
+
+For power users it also provides:
+* a [`<Context>`](/docs/api.md#context) on which you can assign a `ResizeObserverEntry` value to trigger any nested components that are using `useBreakpoints()`;
+* a [`useResizeObserver()`](/docs/api.md#useresizeobserver) hook to access the instantiated `ResizeObserver` on `<Provider>`;
+* a [`useResizeObserverEntry()`](/docs/api.md#useresizeobserverentry) hook to retrieve the `ResizeObserverEntry` put on the nearest `<Context>`. This is what `useBreakpoints()` uses under the hood.
 
 This allows you to change the evaluated logic and rendered output of a component. For example, you can change a dropdown menu to a horizontal list menu based on its parent container's width without using CSS media queries.
 
@@ -13,90 +19,71 @@ This allows you to change the evaluated logic and rendered output of a component
 
 While this package has seen little action "in the wild", it has first been developed and groomed elsewhere. As such, I don't expect a lot of changes conceptually. However, the API of this hook is not finalised and may change at any given time.
 
-# Usage
+# Quick start
+
+Follow these steps to get started with `react-breakpoints`. This is the **minimum required setup** and is just the tip of the iceberg, though. Check out the [API Docs](/docs/api.md) for all options.
 
 ```shell
-npm install --save @envato/react-breakpoints-hook
+npm install @envato/react-breakpoints
 ```
 
-## Set up a CellContext.Provider
+## Set up the Provider
 
 ```javascript
-import { CellContext } from '@envato/react-breakpoints-hook';
+import { Provider as ResizeObserverProvider } from '@envato/react-breakpoints';
 
-const MyCellComponent = ({ cellWidth, cellHeight, children }) => (
-  <CellContext.Provider value={[cellWidth, cellHeight]}>
-    {children}
-  </CellContext.Provider>
+const App = () => (
+  <ResizeObserverProvider>
+    ...
+  </ResizeObserverProvider>
 )
 ```
 
-## Set breakpoints on a component
+⚠️ **Caution**: You may need to provide some props to `<Provider>` to increase browser support. Please refer to the [API Docs](/docs/api.md#provider).
+
+## Observe an element
 
 ```javascript
-import { useBreakpoints } from '@envato/react-breakpoints-hook';
+import { Observe } from '@envato/react-breakpoints';
 
-const MyChangingComponent = () => {
-  const [label] = useBreakpoints({
-    0: 'mobile',
-    769: 'tablet',
-    1025: 'desktop'
-  });
+<Observe
+  render={({ observedElementProps }) => (
+    <aside {...observedElementProps}>
+      <MyResponsiveComponent />
+    </aside>
+  )}
+/>
+```
+
+## Consume the observation
+
+```javascript
+import { useBreakpoints } from '@envato/react-breakpoints';
+
+const MyResponsiveComponent = () => {
+  const options = {
+    widths: {
+      0: 'mobile',
+      769: 'tablet',
+      1025: 'desktop'
+    }
+  };
+
+  const [label] = useBreakpoints(options);
 
   return (
     <div className={label}>
-      This element is currently within the {label} breakpoint.
+      This element is currently within the {label} range.
     </div>
   );
-}
+};
 ```
 
-## You can return anything
+See the [API Docs](/docs/api.md) for reference guides and usage examples.
 
-```javascript
-// Numbers
-const [visibleItems] = useBreakpoints({
-  0: 1,
-  769: 3,
-  1025: 4
-});
+# Server-Side Rendering
 
-// Booleans
-const [showDropdown] = useBreakpoints({
-  0: true,
-  800: false
-});
-
-// Even functions
-const [echo] = useBreakpoints({
-  0: () => console.log('First breakpoint'),
-  1381: () => console.log('Second breakpoint')
-});
-echo();
-```
-
-## And you can break on height too
-
-```javascript
-const [widthValue, heightValue] = useBreakpoints({
-  769: 'tablet-width',
-  1025: 'desktop-width'
-}, {
-  720: 'HD Ready',
-  1080: 'Full HD',
-  2160: '4K'
-});
-
-// [widthValue, heightValue] for CellContext size 1024x768
-// => 'tablet-width', 'HD Ready'
-
-// [widthValue, heightValue] for CellContext size 1920x1080
-// => 'desktop-width', 'Full HD'
-
-// [widthValue, heightValue] for CellContent size 640x480
-// => undefined, undefined
-// To avoid returning undefined you must provide a key 0 breakpoint value.
-```
+See [`Server-Side Rendering`](/docs/server-side-rendering.md) for more information.
 
 # Maintainers
 
