@@ -26,7 +26,7 @@ interface IObserveProps<T> {
 }
 
 interface IProvider {
-  ponyfill: ResizeObserver
+  ponyfill?: ResizeObserver
 }
 
 interface IBreakpoints<T> {
