@@ -31,12 +31,14 @@ const findBreakpoint = (breakpoints, entrySize) => {
  * @param {Object} [options.widths] - Map of minWidths and their return values.
  * @param {Object} [options.heights] - Map of minHeights and their return values.
  * @param {String} [options.box] - Name of observed box you want to match your breakpoints against. One of ['border-box', 'content-box', 'device-pixel-content-box'].
+ * @param {Number} [options.fragment] - Index of fragment to return from array of observed fragments.
  * @returns {Array} Array of matching width value, and matching height value.
  */
 const useBreakpoints = ({
   widths = {},
   heights = {},
-  box = undefined
+  box = undefined,
+  fragment = 0 // https://github.com/w3c/csswg-drafts/pull/4529
 }) => {
   const resizeObserverEntry = useResizeObserverEntry();
 
@@ -46,22 +48,25 @@ const useBreakpoints = ({
    */
   if (!resizeObserverEntry) return [undefined, undefined];
 
-  let entryWidth, entryHeight;
+  let entryBox, entryWidth, entryHeight;
 
   switch (box) {
     case boxOptions.BORDER_BOX:
-      entryWidth = resizeObserverEntry.borderBoxSize.inlineSize;
-      entryHeight = resizeObserverEntry.borderBoxSize.blockSize;
+      entryBox = resizeObserverEntry.borderBoxSize[fragment] || resizeObserverEntry.borderBoxSize;
+      entryWidth = entryBox.inlineSize;
+      entryHeight = entryBox.blockSize;
       break;
 
     case boxOptions.CONTENT_BOX:
-      entryWidth = resizeObserverEntry.contentBoxSize.inlineSize;
-      entryHeight = resizeObserverEntry.contentBoxSize.blockSize;
+      entryBox = resizeObserverEntry.contentBoxSize[fragment] || resizeObserverEntry.contentBoxSize;
+      entryWidth = entryBox.inlineSize;
+      entryHeight = entryBox.blockSize;
       break;
 
     case boxOptions.DEVICE_PIXEL_CONTENT_BOX:
-      entryWidth = resizeObserverEntry.devicePixelContentBoxSize.inlineSize;
-      entryHeight = resizeObserverEntry.devicePixelContentBoxSize.blockSize;
+      entryBox = resizeObserverEntry.devicePixelContentBoxSize[fragment] || resizeObserverEntry.devicePixelContentBoxSize;
+      entryWidth = entryBox.inlineSize;
+      entryHeight = entryBox.blockSize;
       break;
 
     default:
