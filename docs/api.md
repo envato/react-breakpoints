@@ -29,7 +29,7 @@ Your app must include a `<Provider>`. It creates a React context with a `ResizeO
 </Provider>
 ```
 
-⚠️ **Caution**: `Provider` instantiates a `window.ResizeObserver` by default. [`window.ResizeObserver` currently has weak browser support](https://caniuse.com/#feat=mdn-api_resizeobserver_resizeobserver). You may pass a `ResizeObserver` constructor to `Provider` to use instead of `window.ResizeObserver`. I recommend [ponyfilling](https://github.com/sindresorhus/ponyfill) using [`@juggle/resize-observer`](https://github.com/juggle/resize-observer). You can also [monkey patch](https://en.wikipedia.org/wiki/Monkey_patch) `window.ResizeObserver` and use `Provider` without the `ponyfill` prop.
+⚠️ **Caution** — `Provider` instantiates a `window.ResizeObserver` by default. [`window.ResizeObserver` currently has weak browser support](https://caniuse.com/#feat=mdn-api_resizeobserver_resizeobserver). You may pass a `ResizeObserver` constructor to `Provider` to use instead of `window.ResizeObserver`. I recommend [ponyfilling](https://github.com/sindresorhus/ponyfill) using [`@juggle/resize-observer`](https://github.com/juggle/resize-observer). You can also [monkey patch](https://en.wikipedia.org/wiki/Monkey_patch) `window.ResizeObserver` and use `Provider` without the `ponyfill` prop.
 
 ## Usage
 
@@ -158,7 +158,7 @@ widths: {
 }
 ```
 
-⚠️ **Caution**: If you do not provide `0` as a key for `widths`, you risk receiving `undefined` as a return value. This is intended behaviour, but makes it difficult to distinguish between receiving `undefined` because of a [Server-Side Rendering](server-side-rendering.md) scenario, or because the observed width is less than the next matching width.
+⚠️ **Caution** — If you do not provide `0` as a key for `widths`, you risk receiving `undefined` as a return value. This is intended behaviour, but makes it difficult to distinguish between receiving `undefined` because of a [Server-Side Rendering](server-side-rendering.md) scenario, or because the observed width is less than the next matching width.
 
 For example, when a width of `360` is observed, using the following `widths` object would return `undefined`:
 
@@ -301,7 +301,7 @@ const MyChildComponent = () => {
 };
 ```
 
-⚠️ **Hint**: Instead of manually implementing the `child.js` portion as above, you may want to use [`useResizeObserverEntry()`](#useresizeobserverentry) instead.
+⚠️ **Hint** — Instead of manually implementing the `child.js` portion as above, you may want to use [`useResizeObserverEntry()`](#useresizeobserverentry) instead.
 
 ---
 
@@ -377,7 +377,7 @@ const MyObservedComponent = () => {
 }
 ```
 
-⚠️ **Hint**: This is for when you really need advanced behaviour. This is completely abstracted away for your convenience by [`<Observe>`](#observe).
+⚠️ **Hint** — This is for when you really need advanced behaviour. This is completely abstracted away for your convenience by [`<Observe>`](#observe).
 
 ---
 
@@ -450,4 +450,4 @@ const MyResponsiveComponent = () => {
 }
 ```
 
-⚠️ **Hint**: You probably don't need this hook, because [`useBreakpoints()`](#usebreakpoints) abstracts the above implementation away for your convenience. You'll likely only need this hook if you need a property from `ResizeObserverEntry` which is not `contentRect` or [one of `box`'s options](#box).
+⚠️ **Hint** — You probably don't need this hook, because [`useBreakpoints()`](#usebreakpoints) abstracts the above implementation away for your convenience. You'll likely only need this hook if you need a property from `ResizeObserverEntry` which is not `contentRect` or [one of `box`'s options](#box).
