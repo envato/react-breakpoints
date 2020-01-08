@@ -30,8 +30,8 @@ const findBreakpoint = (breakpoints, entrySize) => {
  * @param {Object} options
  * @param {Object} [options.widths] - Map of minWidths and their return values.
  * @param {Object} [options.heights] - Map of minHeights and their return values.
- * @param {String} [options.box] - Name of observed box you want to match your breakpoints against. One of ['border-box', 'content-box', 'device-pixel-content-box'].
- * @param {Number} [options.fragment] - Index of fragment to return from array of observed fragments.
+ * @param {String} [options.box] - Name of element's box you want to match your breakpoints against. One of ['border-box', 'content-box', 'device-pixel-content-box'].
+ * @param {Number} [options.fragment] - Index of fragment to return from array of observed box fragments.
  * @returns {Array} Array of matching width value, and matching height value.
  */
 const useBreakpoints = ({
