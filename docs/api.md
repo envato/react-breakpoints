@@ -48,7 +48,7 @@ const App = () => (
 
 # `<Observe>`
 
-You can observe size changes of an element's `box` by rendering it through `<Observe>`'s `render` prop. Your render function receives a `observedElementProps` argument that you spread onto the DOM element you wish to observe.
+You can observe size changes of an element's `box` by rendering it through `<Observe>`'s `render` prop. Your render function receives a `observedElementProps` argument that you spread onto the DOM element you wish to observe. It also receives `widthMatch` and `heightMatch` arguments which match the values you assigned via `<Observe>`'s `breakpoints` prop.
 
 ⚠️ **Important** — There is an important distinction between the `box` you're observing and `box`es triggering breakpoints. See [Observing boxes vs. Matching boxes](boxes.md) for more information.
 
@@ -58,11 +58,16 @@ You can observe size changes of an element's `box` by rendering it through `<Obs
 <Observe
   {/* pass a render function */}
   render={
-    /**
-     * @argument {Object} args
-     * @argument {Object} args.observedElementProps - Object of props to spread onto the element you wish to observe.
-     */
-    ({ observedElementProps }) => (
+    ({
+      /* object of props to spread onto the element you wish to observe */
+      observedElementProps,
+
+      /* (optional) observed matching value from the `widths` option provided in the `breakpoints` prop */
+      widthMatch,
+
+      /* (optional) observed matching value from the `heights` option provided in the `breakpoints` prop */
+      heightMatch
+    }) => (
       <>
         {/* parent with access to observations */}
         <ParentComponent>
@@ -85,6 +90,11 @@ You can observe size changes of an element's `box` by rendering it through `<Obs
 
   {/* (optional) set which box to observe to on the observed element */}
   box='content-box'
+
+  {/* (optional) set breakpoint options */}
+  breakpoints={{
+    /* see `options` object of `useBreakpoints()` - this object has the exact same shape */
+  }}
 />
 ```
 
@@ -100,6 +110,13 @@ import { Observe } from '@envato/react-breakpoints';
     </aside>
   )}
   box='border-box'
+  breakpoints={{
+    widths: {
+      0: 'mobile',
+      769: 'tablet',
+      1025: 'desktop'
+    }
+  }}
 />
 ```
 
@@ -109,9 +126,11 @@ import { Observe } from '@envato/react-breakpoints';
 
 Components inside an "[`<Observe>`](#observe) scope" have access to its observations. The observed element's sizes are available on a [context](#context) via the `useBreakpoints()` hook.
 
-The hook takes an `options` object, which must include a `widths` or `heights` key (or both) with an object as its value. That object must have a shape of numbers as keys, and a value of any type. The value you set here is what will eventually be returned by `useBreakpoints()`.
+The hook takes an `options` object as its first argument, which must include a `widths` or `heights` key (or both) with an object as its value. That object must have a shape of numbers as keys, and a value of any type. The value you set here is what will eventually be returned by `useBreakpoints()`.
 
 Optionally, you can include a `box` property, which — depending on your implementation of `ResizeObserver` — can target different observable "boxes" of an element. By default, the legacy `contentRect` property will be used by `useBreakpoints()`.
+
+The hook takes a optional `ResizeObserverEntry` as its second argument. **If you pass one, `useBreakpoints()` will not fetch it from the [context](#context), so use caution!**
 
 ## Reference guide
 
@@ -139,7 +158,10 @@ const [widthValue, heightValue] = useBreakpoints({
 
   /* (optional) the box size fragment index to match widths and heights on (default 0) */
   fragment: 0
-});
+},
+
+/* (optional) a ResizeObserverEntry to use instead of the one provided on context */
+myResizeObserverEntry);
 ```
 
 ### `widths`
