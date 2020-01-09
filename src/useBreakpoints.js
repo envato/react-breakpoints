@@ -42,40 +42,36 @@ const useBreakpoints = ({
 }) => {
   const resizeObserverEntry = useResizeObserverEntry();
 
-  /**
-   * Short-circuit if element from Context has not been observed yet.
-   * This is mostly the case when doing Server-Side Rendering.
-   */
-  if (!resizeObserverEntry) return [undefined, undefined];
+  const [width, setWidth] = useState(undefined);
+  const [height, setHeight] = useState(undefined);
 
   let entryBox, entryWidth, entryHeight;
 
-  switch (box) {
-    case boxOptions.BORDER_BOX:
-      entryBox = resizeObserverEntry.borderBoxSize[fragment] || resizeObserverEntry.borderBoxSize;
-      entryWidth = entryBox.inlineSize;
-      entryHeight = entryBox.blockSize;
-      break;
+  if (resizeObserverEntry) {
+    switch (box) {
+      case boxOptions.BORDER_BOX:
+        entryBox = resizeObserverEntry.borderBoxSize[fragment] || resizeObserverEntry.borderBoxSize;
+        entryWidth = entryBox.inlineSize;
+        entryHeight = entryBox.blockSize;
+        break;
 
-    case boxOptions.CONTENT_BOX:
-      entryBox = resizeObserverEntry.contentBoxSize[fragment] || resizeObserverEntry.contentBoxSize;
-      entryWidth = entryBox.inlineSize;
-      entryHeight = entryBox.blockSize;
-      break;
+      case boxOptions.CONTENT_BOX:
+        entryBox = resizeObserverEntry.contentBoxSize[fragment] || resizeObserverEntry.contentBoxSize;
+        entryWidth = entryBox.inlineSize;
+        entryHeight = entryBox.blockSize;
+        break;
 
-    case boxOptions.DEVICE_PIXEL_CONTENT_BOX:
-      entryBox = resizeObserverEntry.devicePixelContentBoxSize[fragment] || resizeObserverEntry.devicePixelContentBoxSize;
-      entryWidth = entryBox.inlineSize;
-      entryHeight = entryBox.blockSize;
-      break;
+      case boxOptions.DEVICE_PIXEL_CONTENT_BOX:
+        entryBox = resizeObserverEntry.devicePixelContentBoxSize[fragment] || resizeObserverEntry.devicePixelContentBoxSize;
+        entryWidth = entryBox.inlineSize;
+        entryHeight = entryBox.blockSize;
+        break;
 
-    default:
-      entryWidth = resizeObserverEntry.contentRect.width;
-      entryHeight = resizeObserverEntry.contentRect.height;
+      default:
+        entryWidth = resizeObserverEntry.contentRect.width;
+        entryHeight = resizeObserverEntry.contentRect.height;
+    }
   }
-
-  const [width, setWidth] = useState(findBreakpoint(widths, entryWidth));
-  const [height, setHeight] = useState(findBreakpoint(heights, entryHeight));
 
   useEffect(() => {
     setWidth(findBreakpoint(widths, entryWidth));
