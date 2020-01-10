@@ -383,7 +383,7 @@ const MyObservedComponent = () => {
   /* for example, you can use the observedEntry information internally... */
 
   useEffect(() => {
-    const firstBorderBoxFragment = observedEntry.borderBox[0];
+    const firstBorderBoxFragment = observedEntry.borderBoxSize[0];
 
     console.log(`width: ${firstBorderBoxFragment.inlineSize}`);
     console.log(`height: ${firstBorderBoxFragment.blockSize}`);
