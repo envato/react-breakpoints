@@ -57,19 +57,25 @@ const App = () => (
 
 ## Observe an element
 
+Everything you render through `<Observe>` becomes aware of the size of the element that is given `{...observedElementProps}`. This is called an "Observe Scope".
+
 ```javascript
 import { Observe } from '@envato/react-breakpoints';
 
-<Observe
-  render={({ observedElementProps }) => (
-    <aside {...observedElementProps}>
-      <MyResponsiveComponent />
-    </aside>
-  )}
-/>
+const MyObservingComponent = () => (
+  <Observe
+    render={({ observedElementProps }) => (
+      <aside {...observedElementProps}>
+        <MyResponsiveComponent />
+      </aside>
+    )}
+  />
+);
 ```
 
 ## Consume the observation
+
+Components that are rendered within the "Observe Scope" can consume observation results via `useBreakpoints()`:
 
 ```javascript
 import { useBreakpoints } from '@envato/react-breakpoints';
@@ -92,6 +98,8 @@ const MyResponsiveComponent = () => {
   );
 };
 ```
+
+However, `<Observe>` supports additional props allowing you to observe **and** consume observations — no `useBreakpoints()` required!
 
 See the [API Docs](/docs/api.md) for reference guides and usage examples.
 

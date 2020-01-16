@@ -56,6 +56,14 @@ You can observe size changes of an element's `box` by rendering it through `<Obs
 
 ```javascript
 <Observe
+  {/* (optional) set which box to observe to on the observed element */}
+  box='content-box'
+
+  {/* (optional) set breakpoint options */}
+  breakpoints={{
+    /* see `options` object of `useBreakpoints()` - this object has the exact same shape */
+  }}
+
   {/* pass a render function */}
   render={
     ({
@@ -69,32 +77,30 @@ You can observe size changes of an element's `box` by rendering it through `<Obs
       heightMatch
     }) => (
       <>
-        {/* parent with access to observations */}
+        {/* parent with access to observations via useBreakpoints() */}
         <ParentComponent>
 
           {/* observed element does not have to be a div, can be any DOM element! */}
           <div {...observedElementProps}>
 
-            {/* children with access to observations */}
+            {/* children with access to observations via useBreakpoints() */}
             <ChildComponent />
 
           </div>
 
-          {/* sibling with access to observations */}
+          {/* sibling with access to observations via useBreakpoints() */}
           <SiblingComponent />
 
         </ParentComponent>
+
+        {/* component without useBreakpoints() can still be told about breakpoints */}
+        <DumbComponent
+          horizontalBreakpoint={widthMatch}
+          verticalBreakpoint={heightMatch}
+        />
       </>
     )
   }
-
-  {/* (optional) set which box to observe to on the observed element */}
-  box='content-box'
-
-  {/* (optional) set breakpoint options */}
-  breakpoints={{
-    /* see `options` object of `useBreakpoints()` - this object has the exact same shape */
-  }}
 />
 ```
 
@@ -103,21 +109,46 @@ You can observe size changes of an element's `box` by rendering it through `<Obs
 ```javascript
 import { Observe } from '@envato/react-breakpoints';
 
-<Observe
-  render={({ observedElementProps }) => (
-    <aside {...observedElementProps}>
-      <MyResponsiveComponent />
-    </aside>
-  )}
-  box='border-box'
-  breakpoints={{
-    widths: {
-      0: 'mobile',
-      769: 'tablet',
-      1025: 'desktop'
-    }
-  }}
-/>
+const MyObservingComponent = () => (
+  <Observe
+    box='border-box'
+    breakpoints={{
+      box: 'content-box',
+      widths: {
+        0: 'mobile',
+        769: 'tablet',
+        1025: 'desktop'
+      },
+      heights: {
+        0: 'SD',
+        720: 'HD-Ready',
+        1080: 'Full HD',
+        2160: '4K'
+      }
+    }}
+    render={({ observedElementProps, widthMatch, heightMatch }) => (
+      <>
+        {/* this element is given a class based on a child sidebar's width */}
+        <article className={widthMatch}>
+
+          {/* this sidebar is observed */}
+          <aside {...observedElementProps}>
+
+            {/* this component uses `useBreakpoints()` to adapt to the sidebar's size */}
+            <MyResponsiveComponent />
+
+          </aside>
+
+          {/* this component receives one of the `heights` strings defined above based on the sidebar's height */}
+          <MyVideoComponent quality={heightMatch} />
+        </article>
+
+        {/* this component also uses `useBreakpoints()` to adapt to the sidebar's size, but from outside the sidebar */}
+        <MyResponsiveComponent />
+      </>
+    )}
+  />
+);
 ```
 
 ---
@@ -136,6 +167,9 @@ The hook takes a optional `ResizeObserverEntry` as its second argument. **If you
 
 ```javascript
 const [widthValue, heightValue] = useBreakpoints({
+  /* (optional) target a box size of the observed element to match widths and heights on */
+  box: 'border-box',
+
   /* (optional) must be specified if `heights` is not specified */
   widths: {
     /* keys must be numbers and are treated like CSS's @media (min-width) */
@@ -153,9 +187,6 @@ const [widthValue, heightValue] = useBreakpoints({
     2160: '4K'
   },
 
-  /* (optional) target a box size of the observed element to match widths and heights on */
-  box: 'border-box',
-
   /* (optional) the box size fragment index to match widths and heights on (default 0) */
   fragment: 0
 },
@@ -164,11 +195,27 @@ const [widthValue, heightValue] = useBreakpoints({
 myResizeObserverEntry);
 ```
 
+### `box`
+
+> `String` <sup>optional</sup>
+
+Depending on your implementation of `ResizeObserver`, the [internal `ResizeObserverEntry`](#useResizeObserverEntry) can contain size information about multiple "boxes" of the observed element.
+
+This library supports the following `box` options (but your browser may not!):
+
+* [`'border-box'`](https://caniuse.com/#feat=mdn-api_resizeobserverentry_borderboxsize)
+* [`'content-box'`](https://caniuse.com/#feat=mdn-api_resizeobserverentry_contentboxsize)
+* [`'device-pixel-content-box'`](https://github.com/w3c/csswg-drafts/issues/3554)
+
+If `box` is left `undefined` or set to any value other than those listed above, `useBreakpoints()` will default to using information from `ResizeObserverEntry.contentRect`.
+
+⚠️ **Important** — There is an important distinction between the `box` you're observing and `box`es triggering breakpoints. See [Observing boxes vs. Matching boxes](boxes.md) for more information.
+
 ### `widths`
 
 > `Object` <sup>optional</sup>
 
-`widths` must be an object with numbers as its keys. The numbers represent the minimum width the observed `box` must have for that key's value to be returned. The value of the highest matching width will be returned.
+`widths` must be an object with numbers as its keys. The numbers represent the minimum width the `box` must have for that key's value to be returned. The value of the highest matching width will be returned.
 
 For example, when a width of `960` is observed, using the following `widths` object would return `'medium'`:
 
@@ -224,7 +271,7 @@ const [Component] = useBreakpoints({
 
 > `Object` <sup>optional</sup>
 
-`heights` must be an object with numbers as its keys. The numbers represent the minimum height the observed `box` must have for that key's value to be returned. The value of the highest matching height will be returned.
+`heights` must be an object with numbers as its keys. The numbers represent the minimum height the `box` must have for that key's value to be returned. The value of the highest matching height will be returned.
 
 For example, when a height of `1440` is observed, using the following `heights` object would return `'Full HD'`:
 
@@ -240,22 +287,6 @@ heights: {
 ⚠️ **Caution**: If you do not provide `0` as a key for `heights`, you risk receiving `undefined` as a return value. This is intended behaviour, but makes it difficult to distinguish between receiving `undefined` because of a [Server-Side Rendering](server-side-rendering.md) scenario, or because the observed height is less than the next matching height.
 
 Values can be of _any_ type, you are not restricted to return `string` values. See example in [`widths`](#widths) section above.
-
-### `box`
-
-> `String` <sup>optional</sup>
-
-Depending on your implementation of `ResizeObserver`, the [internal `ResizeObserverEntry`](#useResizeObserverEntry) can contain size information about multiple "boxes" of the observed element.
-
-This library supports the following `box` options (but your browser may not!):
-
-* [`'border-box'`](https://caniuse.com/#feat=mdn-api_resizeobserverentry_borderboxsize)
-* [`'content-box'`](https://caniuse.com/#feat=mdn-api_resizeobserverentry_contentboxsize)
-* [`'device-pixel-content-box'`](https://github.com/w3c/csswg-drafts/issues/3554)
-
-If `box` is left `undefined` or set to any value other than those listed above, `useBreakpoints()` will default to returning information from `ResizeObserverEntry.contentRect`.
-
-⚠️ **Important** — There is an important distinction between the `box` you're observing and `box`es triggering breakpoints. See [Observing boxes vs. Matching boxes](boxes.md) for more information.
 
 ### `fragment`
 
