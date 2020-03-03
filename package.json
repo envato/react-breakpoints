@@ -3,12 +3,8 @@
   "version": "0.3.0",
   "description": "Respond to changes in a parent DOM element's size.",
   "main": "dist/index.js",
-  "module": "dist/index.module.js",
-  "unpkg": "dist/index.umd.js",
-  "source": "index.js",
   "scripts": {
-    "build": "microbundle --jsx React.createElement",
-    "dev": "microbundle watch --jsx React.createElement",
+    "build": "babel src/ -d dist/ --source-maps",
     "prepare": "npm run build"
   },
   "repository": {
@@ -24,7 +20,7 @@
     "breakpoints",
     "media-queries"
   ],
-  "author": "Envato",
+  "author": "marc.dingena@envato.com",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/envato/react-breakpoints/issues"
@@ -35,8 +31,10 @@
     "react-dom": "^16.12.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.6",
     "@babel/preset-env": "^7.7.7",
-    "microbundle": "^0.11.0",
+    "@babel/preset-react": "^7.8.3",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
   },
