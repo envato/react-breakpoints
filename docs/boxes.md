@@ -1,12 +1,14 @@
-# Observing boxes vs. Matching boxes
+# Observing vs. Consuming boxes
 
-There is an important distinction between the `box` you're observing and `box`es triggering breakpoints.
+There is an important distinction between the `box` you observe and the `box` you consume for triggering breakpoints.
 
 > You can observe a box on an element, and then respond to changes in **another** box of that element.
 
-There might be cases where observing the same box you're matching breakpoints against is not desirable. **This package supports observing and matching on different boxes.**
+There might be cases where observing the same box you're matching breakpoints against is not desirable. **This package supports observing and consuming different boxes on the same element.**
 
-## What's happening under the hood?
+<details>
+<summary><big>What's happening under the hood?</big></summary>
+
 
 Consider this example code and chain of events:
 
@@ -53,6 +55,7 @@ const ChildComponent = () => {
 1. Because `border-box` is not observed, `<Observe>`'s context does not get updated, and therefore `<ChildComponent>` does not update.
 1. Finally, after a while longer, the element's `device-pixel-content-box` size changes.
 1. Even though `<ChildComponent>` uses this box's size, `<Observe>` is not observing changes on this box, and does not update its context to inform `<ChildComponent>`.
+</details>
 
 # ⚠️ Important
 
@@ -62,7 +65,7 @@ Consider the [CSS box model](https://en.wikipedia.org/wiki/CSS_box_model#/media/
 
 ![CSS Box Model](css-box-model.png)
 
-When padding or border increase in thickness, the content's size will remain unaffected. If you are observing changes in `content-box`'s size, those padding and border changes will not trigger any updates.
+When padding or border increase in thickness, the content's size will remain unaffected. If you are observing changes in `content-box`'s size, those padding and border changes **will not trigger any updates**.
 
 Similarly, let's say you have the following element:
 
@@ -72,4 +75,4 @@ Similarly, let's say you have the following element:
 </div>
 ```
 
-Then you change that element's `padding` to `0`. If you are observing changes in this element's `border-box` size, this padding change will not trigger any updates because the `border-box` did not change size.
+Then you change that element's `padding` to `0`. If you are observing changes in this element's `border-box` size, this padding change **will not trigger any updates** because the `border-box` did not change size.
