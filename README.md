@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./React-Breakpoints.svg" alt="React Breakpoints logo" />
+  <img width="200" src="./React-Breakpoints.png" alt="React Breakpoints logo" />
 </p>
 
 <h1 align="center">React Breakpoints</h1>
@@ -106,7 +106,7 @@ See the [API Docs](/docs/api.md) for reference guides and usage examples.
 
 # Observing vs. Consuming boxes
 
-There is an important distinction between the `box` you observe and the `box` you consume for triggering breakpoints. See [Observing vs. Consuming Boxes](boxes.md) for more information.
+There is an important distinction between the `box` you observe and the `box` you consume for triggering breakpoints. See [Observing vs. Consuming Boxes](/docs/boxes.md) for more information.
 
 # Server-Side Rendering
 

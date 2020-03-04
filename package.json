@@ -1,7 +1,7 @@
 {
   "name": "@envato/react-breakpoints",
-  "version": "1.0.0",
-  "description": "Respond to changes in a parent DOM element's size.",
+  "version": "1.0.1",
+  "description": "Respond to changes in a DOM element's size. With React Breakpoints, element queries are no longer \"web design's unicorn\" 🦄",
   "main": "dist/index.js",
   "scripts": {
     "build": "babel src/ -d dist/ --source-maps",
@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/envato/react-breakpoints#readme",
   "peerDependencies": {
-    "react": "^16.8.0",
+    "react": "^16.12.0",
     "react-dom": "^16.12.0"
   },
   "devDependencies": {
@@ -39,6 +39,6 @@
     "react-dom": "^16.12.0"
   },
   "dependencies": {
-    "@envato/react-resize-observer-hook": "^1.0.0"
+    "@envato/react-resize-observer-hook": "^1.0.1"
   }
 }
