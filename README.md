@@ -32,9 +32,7 @@ For power users this package also provides:
 
 # 🚧 Developer status
 
-The API of this hook is not finalised and may change at any given time.
-
-I'm currently in the process of helping other Envatians integrate this package into their apps to mature the codebase and documentation.
+Several projects within Envato are currently using this package, giving me confidence that the API is clear and the code adds value. The package is still in an early stage, but exposure to "the wild" will help reveal more edge-cases and hopefully make the package more robust overall.
 
 # ⚡️ Quick start
 
