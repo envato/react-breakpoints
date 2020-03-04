@@ -102,9 +102,9 @@ However, `<Observe>` supports additional props allowing you to observe **and** c
 
 See the [API Docs](/docs/api.md) for reference guides and usage examples.
 
-# Observing boxes vs. Matching boxes
+# Observing vs. Consuming boxes
 
-There is an important distinction between the `box` you're observing and `box`es triggering breakpoints. See [Observing boxes vs. Matching boxes](/docs/boxes.md) for more information.
+There is an important distinction between the `box` you observe and the `box` you consume for triggering breakpoints. See [Observing vs. Consuming Boxes](boxes.md) for more information.
 
 # Server-Side Rendering
 
