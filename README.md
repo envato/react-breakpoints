@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="./React-Breakpoints.svg" alt="React Breakpoints logo" />
+</p>
+
 <h1 align="center">React Breakpoints</h1>
 
 <p align="center">
