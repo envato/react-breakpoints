@@ -490,12 +490,17 @@ const MyObservedComponent = () => {
 
 # `useResizeObserverEntry()`
 
-⚠️ **Advanced usage** — This hook is used internally in [`useBreakpoints()`](#usebreakpoints) to retrieve the `ResizeObserverEntry` instance set by [`<Observe>`](#observe). It allows you to manually extract [its properties](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserverEntry), most notably `.borderBoxSize`, `.contentBoxSize`, and `.devicePixelContentBoxSize`. This hook takes no arguments.
+⚠️ **Advanced usage** — This hook is used internally in [`useBreakpoints()`](#usebreakpoints) to retrieve the `ResizeObserverEntry` instance set by [`<Observe>`](#observe). It allows you to manually extract [its properties](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserverEntry), most notably `.borderBoxSize`, `.contentBoxSize`, and `.devicePixelContentBoxSize`.
+
+The hook takes an optional `ResizeObserverEntry` as its second argument. **If you pass one, `useResizeObserverEntry()` will not fetch it from the [context](#context), so use caution!**
 
 ## Reference guide
 
 ```javascript
-const resizeObserverEntry = useResizeObserverEntry();
+const resizeObserverEntry = useResizeObserverEntry(
+  /* (optional) a ResizeObserverEntry to use instead of the one provided on context */
+  injectResizeObserverEntry
+);
 const fragmentIndex = 0;
 
 /* retrieve width and height from legacy `contentRect` property */

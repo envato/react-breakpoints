@@ -41,7 +41,7 @@ const useBreakpoints = ({
   box = undefined,
   fragment = 0 // https://github.com/w3c/csswg-drafts/pull/4529
 }, injectResizeObserverEntry = undefined) => {
-  const resizeObserverEntry = injectResizeObserverEntry || useResizeObserverEntry();
+  const resizeObserverEntry = useResizeObserverEntry(injectResizeObserverEntry);
 
   const [width, setWidth] = useState(undefined);
   const [height, setHeight] = useState(undefined);

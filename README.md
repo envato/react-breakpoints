@@ -5,6 +5,7 @@
 <h1 align="center">React Breakpoints</h1>
 
 <p align="center">
+  <img alt="dependent repositories" src="https://img.shields.io/librariesio/dependent-repos/npm/@envato/react-breakpoints?label=Used%20by&style=for-the-badge" />
   <img alt="npm version" src="https://img.shields.io/npm/v/@envato/react-breakpoints?style=for-the-badge" />
   <img alt="react version" src="https://img.shields.io/npm/dependency-version/@envato/react-breakpoints/dev/react?style=for-the-badge">
   <img alt="license" src="https://img.shields.io/npm/l/@envato/react-breakpoints?style=for-the-badge" />
