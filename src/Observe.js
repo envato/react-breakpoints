@@ -6,24 +6,18 @@ import { useBreakpoints } from './useBreakpoints';
 const Observe = ({
   render,
   box = undefined,
-  breakpoints = undefined
+  breakpoints = {}
 }) => {
   const observeOptions = box ? { box } : {};
 
   const [ref, observedEntry] = useResizeObserver(observeOptions);
+  const [widthMatch, heightMatch] = useBreakpoints(breakpoints, observedEntry);
 
   const renderOptions = {
     observedElementProps: { ref },
-    widthMatch: undefined,
-    heightMatch: undefined
+    widthMatch,
+    heightMatch
   };
-
-  if (breakpoints) {
-    const [widthMatch, heightMatch] = useBreakpoints(breakpoints, observedEntry);
-
-    renderOptions.widthMatch = widthMatch;
-    renderOptions.heightMatch = heightMatch;
-  }
 
   return (
     <Context.Provider value={observedEntry}>
