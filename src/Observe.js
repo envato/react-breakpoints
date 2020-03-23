@@ -4,9 +4,9 @@ import { Context } from './Context';
 import { useBreakpoints } from './useBreakpoints';
 
 const Observe = ({
-  render,
   box = undefined,
-  breakpoints = {}
+  breakpoints = {},
+  render
 }) => {
   const observeOptions = box ? { box } : {};
 
