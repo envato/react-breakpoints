@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useLayoutEffect } from 'react';
 import { useResizeObserverEntry } from './useResizeObserverEntry';
 
 const boxOptions = {
@@ -74,7 +74,7 @@ const useBreakpoints = ({
     }
   }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setWidth(findBreakpoint(widths, entryWidth));
     setHeight(findBreakpoint(heights, entryHeight));
   }, [widths, entryWidth, heights, entryHeight]);
