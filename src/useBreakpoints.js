@@ -14,6 +14,8 @@ const boxOptions = {
  * @returns {*} Value of `breakpoints` at matching breakpoint.
  */
 const findBreakpoint = (breakpoints, entrySize) => {
+  if (typeof entrySize === 'undefined') return undefined;
+
   let breakpoint;
   const sizes = Object.keys(breakpoints);
 
