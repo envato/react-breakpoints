@@ -1,5 +1,6 @@
-import { useState, useLayoutEffect } from 'react';
+import { useRef, useState, useLayoutEffect } from 'react';
 import { useResizeObserverEntry } from './useResizeObserverEntry';
+import compare from 'just-compare';
 
 const boxOptions = {
   BORDER_BOX: 'border-box', // https://caniuse.com/#feat=mdn-api_resizeobserverentry_borderboxsize
@@ -45,6 +46,9 @@ const useBreakpoints = ({
 }, injectResizeObserverEntry = undefined) => {
   const resizeObserverEntry = useResizeObserverEntry(injectResizeObserverEntry);
 
+  const widthRef = useRef(undefined);
+  const heightRef = useRef(undefined);
+
   const [width, setWidth] = useState(undefined);
   const [height, setHeight] = useState(undefined);
 
@@ -77,8 +81,18 @@ const useBreakpoints = ({
   }
 
   useLayoutEffect(() => {
-    setWidth(findBreakpoint(widths, entryWidth));
-    setHeight(findBreakpoint(heights, entryHeight));
+    const widthMatch = findBreakpoint(widths, entryWidth);
+    const heightMatch = findBreakpoint(heights, entryHeight);
+
+    if (!compare(widthMatch, widthRef.current)) {
+      widthRef.current = widthMatch;
+      setWidth(widthMatch);
+    }
+
+    if (!compare(heightMatch, heightRef.current)) {
+      heightRef.current = heightMatch;
+      setHeight(heightMatch);
+    }
   }, [widths, entryWidth, heights, entryHeight]);
 
   return [width, height];

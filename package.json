@@ -39,6 +39,7 @@
     "react-dom": "^16.12.0"
   },
   "dependencies": {
-    "@envato/react-resize-observer-hook": "^1.0.1"
+    "@envato/react-resize-observer-hook": "^1.0.1",
+    "just-compare": "^1.3.0"
   }
 }
