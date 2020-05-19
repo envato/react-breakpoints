@@ -1,6 +1,5 @@
 import { useRef, useState, useLayoutEffect } from 'react';
 import { useResizeObserverEntry } from './useResizeObserverEntry';
-import compare from 'just-compare';
 
 const boxOptions = {
   BORDER_BOX: 'border-box', // https://caniuse.com/#feat=mdn-api_resizeobserverentry_borderboxsize
@@ -12,7 +11,7 @@ const boxOptions = {
  * Find the breakpoint matching the given entry size.
  * @argument {Object} breakpoints - Map of sizes with their return values.
  * @argument {Number} entrySize - Size of entry to check breakpoints against.
- * @returns {*} Value of `breakpoints` at matching breakpoint.
+ * @returns {Number} Key of `breakpoints` at matching breakpoint.
  */
 const findBreakpoint = (breakpoints, entrySize) => {
   if (typeof entrySize === 'undefined') return undefined;
@@ -25,7 +24,7 @@ const findBreakpoint = (breakpoints, entrySize) => {
     breakpoint = next;
   }
 
-  return breakpoints[breakpoint];
+  return breakpoint;
 };
 
 /**
@@ -84,18 +83,18 @@ const useBreakpoints = ({
     const widthMatch = findBreakpoint(widths, entryWidth);
     const heightMatch = findBreakpoint(heights, entryHeight);
 
-    if (!compare(widthMatch, widthRef.current)) {
+    if (widthMatch !== widthRef.current) {
       widthRef.current = widthMatch;
       setWidth(widthMatch);
     }
 
-    if (!compare(heightMatch, heightRef.current)) {
+    if (heightMatch !== heightRef.current) {
       heightRef.current = heightMatch;
       setHeight(heightMatch);
     }
   }, [widths, entryWidth, heights, entryHeight]);
 
-  return [width, height];
+  return [widths[width], heights[height]];
 };
 
 export { useBreakpoints };
