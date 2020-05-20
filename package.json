@@ -1,6 +1,6 @@
 {
   "name": "@envato/react-breakpoints",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Respond to changes in a DOM element's size. With React Breakpoints, element queries are no longer \"web design's unicorn\" 🦄",
   "main": "dist/index.js",
   "types": "src/index.d.ts",
