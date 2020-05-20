@@ -11,44 +11,44 @@ interface ResizeObserverEntry {
   readonly target: Element;
   readonly contentRect: DOMRectReadOnly;
   readonly borderBoxSize: Array<ResizeObserverBoxSize> | ResizeObserverBoxSize;
-  readonly contentBoxSize: Arrray<ResizeObserverBoxSize> | ResizeObserverBoxSize;
-  readonly devicePixelContentBoxSize: Arrray<ResizeObserverBoxSize> | ResizeObserverBoxSize;
+  readonly contentBoxSize: Array<ResizeObserverBoxSize> | ResizeObserverBoxSize;
+  readonly devicePixelContentBoxSize: Array<ResizeObserverBoxSize> | ResizeObserverBoxSize;
 }
 
-interface Breakpoints<T> {
-  [key: number]: T;
+interface Breakpoints {
+  [key: number]: any;
 }
 
-interface BreakpointsOptions<W, H> {
+interface BreakpointsOptions {
   box?: BoxOptions;
-  widths?: Breakpoints<W>;
-  heights?: Breakpoints<H>;
+  widths?: Breakpoints;
+  heights?: Breakpoints;
   fragment?: number;
 }
 
-interface ObservedElementProps<T> {
-  ref: React.RefObject<T>;
+interface ObservedElementProps {
+  ref: () => React.RefObject<HTMLElement>;
 }
 
-interface ObserveRenderArgs<E, W, H> {
-  observedElementProps: ObservedElementProps<E>;
-  widthMatch: W;
-  heightMatch: H;
+interface ObserveRenderArgs {
+  observedElementProps: ObservedElementProps;
+  widthMatch: any;
+  heightMatch: any;
 }
 
-interface ObserveProps<E, W, H> {
+interface ObserveProps {
   box?: BoxOptions;
-  breakpoints?: BreakpointsOptions<W, H>;
+  breakpoints?: BreakpointsOptions;
   render: ({
     observedElementProps,
     widthMatch,
     heightMatch
-  }: ObserveRenderArgs<E, W, H>) => JSX.Element;
+  }: ObserveRenderArgs) => React.ReactNode;
 }
 
-export const Observe: <E, W, H>(props: ObserveProps<E, W, H>) => JSX.Element;
+export const Observe: (props: ObserveProps) => React.ReactNode;
 
-export const useBreakpoints: <W extends any, H extends any>(options: BreakpointsOptions<W, H>) => [W, H];
+export const useBreakpoints: (options: BreakpointsOptions, injectResizeObserverEntry?: ResizeObserverEntry) => [any, any];
 
 export const useResizeObserverEntry: (injectResizeObserverEntry?: ResizeObserverEntry) => ResizeObserverEntry | null;
 
