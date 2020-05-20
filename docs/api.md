@@ -4,13 +4,13 @@ Common usage:
 
 * [`<Provider>`](#provider)
 * [`<Observe>`](#observe)
-* [`useBreakpoints()`](#usebreakpoints)
 
 Advanced usage:
 
-* [`<Context>`](#context)
+* [`useBreakpoints()`](#usebreakpoints)
 * [`useResizeObserver()`](#useresizeobserver)
 * [`useResizeObserverEntry()`](#useresizeobserverentry)
+* [`<Context>`](#context)
 
 ---
 
@@ -196,6 +196,8 @@ const MyObservingComponent = () => (
 
 # `useBreakpoints()`
 
+⚠️ **Advanced usage** — This hook is used internally in [`<Observe>`](#observe) to enable the use of the optional `breakpoints` prop.
+
 Components inside an "[`<Observe>`](#observe) scope" have access to its observations. The observed element's sizes are available on a [context](#context) via the `useBreakpoints()` hook.
 
 The hook takes an `options` object as its first argument, which must include a `widths` or `heights` key (or both) with an object as its value. That object must have a shape of numbers as keys, and a value of any type. The value you set here is what will eventually be returned by `useBreakpoints()`.
@@ -376,42 +378,6 @@ const MyResponsiveComponent = () => {
 
 ---
 
-# `<Context>`
-
-⚠️ **Advanced usage** — This React context is used internally by [`useBreakpoints()`](#usebreakpoints). You may use this context with `React.useContext()` to access the information stored in the context provider, which is typically a `ResizeObserverEntry` set internally by [`<Observe>`](#observe).
-
-## Reference guide
-
-```javascript
-<Context.Provider value={ResizeObserverEntry}>
-```
-
-## Usage
-
-`parent.js`
-```javascript
-import { Context } from '@envato/react-breakpoints';
-
-<Context.Provider value={myResizeObserverEntry}>
-  /* children with access to `myResizeObserverEntry` */
-</Context.Provider>
-```
-
-`child.js`
-```javascript
-import { useContext } from 'react';
-import { Context } from '@envato/react-breakpoints';
-
-const MyChildComponent = () => {
-  const myResizeObserverEntry = useContext(Context);
-  /* ... */
-};
-```
-
-⚠️ **Hint** — Instead of manually implementing the `child.js` portion as above, you may want to use [`useResizeObserverEntry()`](#useresizeobserverentry) instead.
-
----
-
 # `useResizeObserver()`
 
 ⚠️ **Advanced usage** — This hook is used internally in [`<Observe>`](#observe) to:
@@ -563,3 +529,39 @@ const MyResponsiveComponent = () => {
 ```
 
 ⚠️ **Hint** — You probably don't need this hook, because [`useBreakpoints()`](#usebreakpoints) abstracts the above implementation away for your convenience. You'll likely only need this hook if you need a property from `ResizeObserverEntry` which is not `contentRect` or one of `box`'s options.
+
+---
+
+# `<Context>`
+
+⚠️ **Internal usage, you probably don't need this!** — This React context is used internally by [`useBreakpoints()`](#usebreakpoints). You may use this context with `React.useContext()` to access the information stored in the context provider, which is typically a `ResizeObserverEntry` set internally by [`<Observe>`](#observe).
+
+## Reference guide
+
+```javascript
+<Context.Provider value={ResizeObserverEntry}>
+```
+
+## Usage
+
+`parent.js`
+```javascript
+import { Context } from '@envato/react-breakpoints';
+
+<Context.Provider value={myResizeObserverEntry}>
+  /* children with access to `myResizeObserverEntry` */
+</Context.Provider>
+```
+
+`child.js`
+```javascript
+import { useContext } from 'react';
+import { Context } from '@envato/react-breakpoints';
+
+const MyChildComponent = () => {
+  const myResizeObserverEntry = useContext(Context);
+  /* ... */
+};
+```
+
+⚠️ **Hint** — Instead of manually implementing the `child.js` portion as above, you may want to use [`useResizeObserverEntry()`](#useresizeobserverentry) instead.

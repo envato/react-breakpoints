@@ -5,7 +5,6 @@
 <h1 align="center">React Breakpoints</h1>
 
 <p align="center">
-  <img alt="dependent repositories" src="https://img.shields.io/librariesio/dependent-repos/npm/@envato/react-breakpoints?label=Used%20by&style=for-the-badge" />
   <img alt="npm version" src="https://img.shields.io/npm/v/@envato/react-breakpoints?style=for-the-badge" />
   <img alt="react version" src="https://img.shields.io/npm/dependency-version/@envato/react-breakpoints/dev/react?style=for-the-badge">
   <img alt="license" src="https://img.shields.io/npm/l/@envato/react-breakpoints?style=for-the-badge" />
@@ -21,13 +20,12 @@
 
 This package provides you with:
 
-* a [`<Provider>`](/docs/api.md#provider) to instantiate the ResizeObserver;
-* an [`<Observe>`](/docs/api.md#observe) component to observe changes in a DOM element;
-* a [`useBreakpoints()`](/docs/api.md#usebreakpoints) hook to change a component's behaviour based on the observed size information in the nearest parent `<Observe>`.
+* a [`<Provider>`](/docs/api.md#provider) to instantiate the `ResizeObserver`;
+* an [`<Observe>`](/docs/api.md#observe) component to observe changes in a DOM element and respond to them.
 
 For power users this package also provides:
 
-* a [`<Context>`](/docs/api.md#context) on which you can assign a `ResizeObserverEntry` value to update any nested components that are using `useBreakpoints()`;
+* a [`useBreakpoints()`](/docs/api.md#usebreakpoints) hook to change a component's behaviour based on the observed size information in the nearest parent `<Observe>`;
 * a [`useResizeObserver()`](/docs/api.md#useresizeobserver) hook to connect a DOM element in your component to the instantiated `ResizeObserver` on `<Provider>`;
 * a [`useResizeObserverEntry()`](/docs/api.md#useresizeobserverentry) hook to retrieve the `ResizeObserverEntry` put on the nearest `<Context>`. This is what `useBreakpoints()` uses under the hood.
 
@@ -59,55 +57,40 @@ const App = () => (
 
 ## Observe an element
 
-Everything you render through `<Observe>` becomes aware of the size of the element that is given `{...observedElementProps}`. This is called an "Observe Scope".
+Everything you render through `<Observe>` has access to the size of the element that is given `{...observedElementProps}`. This is called the "Observe Scope".
 
 ```javascript
 import { Observe } from '@envato/react-breakpoints';
 
 const MyObservingComponent = () => (
   <Observe
-    render={({ observedElementProps }) => (
-      <aside {...observedElementProps}>
-        <MyResponsiveComponent />
-      </aside>
+    breakpoints={{
+      widths: {
+        0: 'mobile',
+        769: 'tablet',
+        1025: 'desktop'
+      }
+    }}
+    render={({ observedElementProps, widthMatch = 'ssr' }) => (
+      <div {...observedElementProps}>
+        <div className={widthMatch}>
+      </div>
     )}
   />
 );
 ```
-
-## Consume the observation
-
-Components that are rendered within the "Observe Scope" can consume observation results via `useBreakpoints()`:
-
-```javascript
-import { useBreakpoints } from '@envato/react-breakpoints';
-
-const MyResponsiveComponent = () => {
-  const options = {
-    widths: {
-      0: 'mobile',
-      769: 'tablet',
-      1025: 'desktop'
-    }
-  };
-
-  const [label] = useBreakpoints(options);
-
-  return (
-    <div className={label}>
-      This element is currently within the {label} range.
-    </div>
-  );
-};
-```
-
-However, `<Observe>` supports additional props allowing you to observe **and** consume observations — no `useBreakpoints()` required!
 
 See the [API Docs](/docs/api.md) for reference guides and usage examples.
 
 # Observing vs. Consuming boxes
 
 There is an important distinction between the `box` you observe and the `box` you consume for triggering breakpoints. See [Observing vs. Consuming Boxes](/docs/boxes.md) for more information.
+
+# Re-rendering
+
+Using [`useResizeObserver()`](/docs/api.md#useresizeobserver), [`useResizeObserverEntry()`](/docs/api.md#useresizeobserverentry) or [`useBreakpoints()`](/docs/api.md#usebreakpoints) in your components causes them to re-render **every time a resize is observed**. 
+
+In some cases, you may want to optimise this. If you only want to re-render your components when breakpoint values actually change, use `React.useMemo` or `React.memo`.
 
 # Server-Side Rendering
 
