@@ -1,5 +1,4 @@
 import { createContext } from 'react';
+import { ExtendedResizeObserverEntry } from './ExtendedResizeObserverEntry';
 
-const Context = createContext(null);
-
-export { Context };
+export const Context = createContext<ExtendedResizeObserverEntry | null>(null);
