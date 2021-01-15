@@ -14,13 +14,22 @@ import { ExtendedResizeObserverEntry } from './ExtendedResizeObserverEntry';
  * {@linkcode https://github.com/envato/react-breakpoints/blob/master/docs/api.md#useresizeobserver|useResizeObserver}
  * in the same component instead of relying on the value from the nearest Context.
  *
- * This is how
+ * This is allowed to facilitate the abstraction in
+ * {@linkcode https://github.com/envato/react-breakpoints/blob/master/docs/api.md#usebreakpoints|useBreakpoints}
+ * which is used in the
  * {@linkcode https://github.com/envato/react-breakpoints/blob/master/docs/api.md#observe|Observe}
- * component combines the
- * {@linkcode https://github.com/envato/react-breakpoints/blob/master/docs/api.md#useresizeobserver|useResizeObserver}
- * hook and the
- * {@linkcode https://github.com/envato/react-breakpoints/blob/master/docs/api.md#useresizeobserverentry|useResizeObserverEntry}
- * hook.
+ * component.
+ *
+ * @example
+ * // MyObservingComponent
+ * return (
+ *   <Context.Provider value={someResizeObserverEntry}>
+ *     <MyConsumingComponent />
+ *   </Context.Provider>
+ * );
+ *
+ * // MyConsumingComponent
+ * const someResizeObserverEntry = useResizeObserverEntry();
  */
 export const useResizeObserverEntry = (
   injectResizeObserverEntry?: ExtendedResizeObserverEntry
