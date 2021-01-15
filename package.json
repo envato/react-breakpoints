@@ -3,9 +3,8 @@
   "version": "1.0.2",
   "description": "Respond to changes in a DOM element's size. With React Breakpoints, element queries are no longer \"web design's unicorn\" 🦄",
   "main": "dist/index.js",
-  "types": "src/index.d.ts",
   "scripts": {
-    "build": "babel src/ -d dist/ --source-maps",
+    "build": "tsc -b",
     "prepare": "npm run build"
   },
   "repository": {
