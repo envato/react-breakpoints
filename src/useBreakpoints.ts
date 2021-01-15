@@ -35,12 +35,15 @@ const findBreakpoint = (breakpoints, entrySize) => {
  * @argument {ResizeObserverEntry} [injectResizeObserverEntry] - Explicitly set the ResizeObserverEntry to use instead of fetching it from Context.
  * @returns {Array} Array of matching width value, and matching height value.
  */
-const useBreakpoints = ({
-  widths = {},
-  heights = {},
-  box = undefined,
-  fragment = 0 // https://github.com/w3c/csswg-drafts/pull/4529
-}, injectResizeObserverEntry = undefined) => {
+const useBreakpoints = (
+  {
+    widths = {},
+    heights = {},
+    box = undefined,
+    fragment = 0 // https://github.com/w3c/csswg-drafts/pull/4529
+  },
+  injectResizeObserverEntry = undefined
+) => {
   const resizeObserverEntry = useResizeObserverEntry(injectResizeObserverEntry);
 
   const [width, setWidth] = useState(undefined);
@@ -63,7 +66,8 @@ const useBreakpoints = ({
         break;
 
       case boxOptions.DEVICE_PIXEL_CONTENT_BOX:
-        entryBox = resizeObserverEntry.devicePixelContentBoxSize[fragment] || resizeObserverEntry.devicePixelContentBoxSize;
+        entryBox =
+          resizeObserverEntry.devicePixelContentBoxSize[fragment] || resizeObserverEntry.devicePixelContentBoxSize;
         entryWidth = entryBox.inlineSize;
         entryHeight = entryBox.blockSize;
         break;
