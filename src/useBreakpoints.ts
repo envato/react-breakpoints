@@ -1,28 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useResizeObserverEntry } from './useResizeObserverEntry';
+import { findBreakpoint } from './findBreakpoint';
 
 const boxOptions = {
   BORDER_BOX: 'border-box', // https://caniuse.com/#feat=mdn-api_resizeobserverentry_borderboxsize
   CONTENT_BOX: 'content-box', // https://caniuse.com/#feat=mdn-api_resizeobserverentry_contentboxsize
   DEVICE_PIXEL_CONTENT_BOX: 'device-pixel-content-box' // https://github.com/w3c/csswg-drafts/issues/3554
-};
-
-/**
- * Find the breakpoint matching the given entry size.
- * @argument {Object} breakpoints - Map of sizes with their return values.
- * @argument {Number} entrySize - Size of entry to check breakpoints against.
- * @returns {*} Value of `breakpoints` at matching breakpoint.
- */
-const findBreakpoint = (breakpoints, entrySize) => {
-  let breakpoint;
-  const sizes = Object.keys(breakpoints);
-
-  for (const next of sizes) {
-    if (entrySize < Number(next)) break;
-    breakpoint = next;
-  }
-
-  return breakpoints[breakpoint];
 };
 
 /**
