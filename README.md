@@ -17,19 +17,20 @@
 `react-breakpoints` allows you to respond to changes in a DOM element's size. You can change the evaluated logic and rendered output of components based on observed size changes in DOM elements. For example, you can change a dropdown menu to a horizontal list menu based on its parent container's width without using CSS media queries.
 
 ## 📦 What's in the box?
+
 > No polling. No event listening. No sentinel elements. **Just a [`ResizeObserver`](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver)!**
 
 This package provides you with:
 
-* a [`<Provider>`](/docs/api.md#provider) to instantiate the ResizeObserver;
-* an [`<Observe>`](/docs/api.md#observe) component to observe changes in a DOM element;
-* a [`useBreakpoints()`](/docs/api.md#usebreakpoints) hook to change a component's behaviour based on the observed size information in the nearest parent `<Observe>`.
+- a [`<Provider>`](/docs/api.md#provider) to instantiate the ResizeObserver;
+- an [`<Observe>`](/docs/api.md#observe) component to observe changes in a DOM element;
+- a [`useBreakpoints()`](/docs/api.md#usebreakpoints) hook to change a component's behaviour based on the observed size information in the nearest parent `<Observe>`.
 
 For power users this package also provides:
 
-* a [`<Context>`](/docs/api.md#context) on which you can assign a `ResizeObserverEntry` value to update any nested components that are using `useBreakpoints()`;
-* a [`useResizeObserver()`](/docs/api.md#useresizeobserver) hook to connect a DOM element in your component to the instantiated `ResizeObserver` on `<Provider>`;
-* a [`useResizeObserverEntry()`](/docs/api.md#useresizeobserverentry) hook to retrieve the `ResizeObserverEntry` put on the nearest `<Context>`. This is what `useBreakpoints()` uses under the hood.
+- a [`<Context>`](/docs/api.md#context) on which you can assign a `ResizeObserverEntry` value to update any nested components that are using `useBreakpoints()`;
+- a [`useResizeObserver()`](/docs/api.md#useresizeobserver) hook to connect a DOM element in your component to the instantiated `ResizeObserver` on `<Provider>`;
+- a [`useResizeObserverEntry()`](/docs/api.md#useresizeobserverentry) hook to retrieve the `ResizeObserverEntry` put on the nearest `<Context>`. This is what `useBreakpoints()` uses under the hood.
 
 # 🚧 Developer status
 
@@ -48,11 +49,7 @@ npm install @envato/react-breakpoints
 ```javascript
 import { Provider as ResizeObserverProvider } from '@envato/react-breakpoints';
 
-const App = () => (
-  <ResizeObserverProvider>
-    ...
-  </ResizeObserverProvider>
-)
+const App = () => <ResizeObserverProvider>...</ResizeObserverProvider>;
 ```
 
 ⚠️ **Caution** — You may need to pass some props to `<Provider>` to increase browser support. Please refer to the [API Docs](/docs/api.md#provider).
@@ -93,11 +90,7 @@ const MyResponsiveComponent = () => {
 
   const [label] = useBreakpoints(options);
 
-  return (
-    <div className={label}>
-      This element is currently within the {label} range.
-    </div>
-  );
+  return <div className={label}>This element is currently within the {label} range.</div>;
 };
 ```
 
@@ -115,7 +108,7 @@ See [Server-Side Rendering](/docs/server-side-rendering.md) for more information
 
 # Maintainers
 
-* [Marc Dingena](https://github.com/mdingena) (owner)
+- [Marc Dingena](https://github.com/mdingena) (owner)
 
 # Contributing
 
