@@ -32,8 +32,8 @@
   },
   "homepage": "https://github.com/envato/react-breakpoints#readme",
   "peerDependencies": {
-    "react": ">=16.8.0",
-    "react-dom": ">=16.8.0"
+    "react": "16.8 - 17",
+    "react-dom": "16.8 - 17"
   },
   "devDependencies": {
     "@types/react": "^17.0.0",
