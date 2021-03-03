@@ -1,17 +1,29 @@
+import { Breakpoints } from './Breakpoints';
+
 /**
- * Find the breakpoint matching the given entry size.
- * @argument {Object} breakpoints - Map of sizes with their return values.
- * @argument {Number} entrySize - Size of entry to check breakpoints against.
- * @returns {*} Value of `breakpoints` at matching breakpoint.
+ * From a `breakpoints` object, find the first key that is equal to or greater than
+ * `observedSize` and return the corresponding value.
+ *
+ * @example
+ * const widths = {
+ *   0: 'mobile',
+ *   769: 'laptop',
+ *   1025: 'desktop',
+ *   1441: 'widescreen'
+ * };
+ *
+ * const matchedValue = findBreakpoint(widths, 1280);
+ * // matchedValue => 'desktop'
+ *
  */
-export const findBreakpoint = (breakpoints, entrySize) => {
-  let breakpoint;
-  const sizes = Object.keys(breakpoints);
+export const findBreakpoint = (breakpoints: Breakpoints, observedSize: number): any => {
+  let breakpoint: number | undefined;
+  const sizes = Object.keys(breakpoints).map(key => Number(key));
 
   for (const next of sizes) {
-    if (entrySize < Number(next)) break;
+    if (observedSize < next) break;
     breakpoint = next;
   }
 
-  return breakpoints[breakpoint];
+  return typeof breakpoint === 'undefined' ? undefined : breakpoints[breakpoint];
 };

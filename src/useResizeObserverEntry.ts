@@ -1,6 +1,6 @@
 import { useContext } from 'react';
+import { ExtendedResizeObserverEntry } from '@envato/react-resize-observer-hook';
 import { Context } from './Context';
-import { ExtendedResizeObserverEntry } from './ExtendedResizeObserverEntry';
 
 /**
  * See API Docs: {@linkcode https://github.com/envato/react-breakpoints/blob/master/docs/api.md#useresizeobserverentry|useResizeObserverEntry}
@@ -32,7 +32,7 @@ import { ExtendedResizeObserverEntry } from './ExtendedResizeObserverEntry';
  * const someResizeObserverEntry = useResizeObserverEntry();
  */
 export const useResizeObserverEntry = (
-  injectResizeObserverEntry?: ExtendedResizeObserverEntry
+  injectResizeObserverEntry?: ExtendedResizeObserverEntry | null
 ): ExtendedResizeObserverEntry | null => {
   const resizeObserverEntry = useContext<ExtendedResizeObserverEntry | null>(Context);
 
