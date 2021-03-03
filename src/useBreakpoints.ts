@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useMemo } from 'react';
 import { ExtendedResizeObserverEntry } from '@envato/react-resize-observer-hook';
 import { Breakpoints } from './Breakpoints';
 import { useResizeObserverEntry } from './useResizeObserverEntry';
@@ -21,7 +21,9 @@ interface WidthsOptions extends BaseOptions {
 
 export type UseBreakpointsOptions = HeightsOptions | WidthsOptions;
 
-export type UseBreakpointsResult = [any, any] & { widthMatch: any; heightMatch: any };
+type Matches = { widthMatch: any; heightMatch: any };
+
+export type UseBreakpointsResult = [any, any] & Matches;
 
 const boxOptions = {
   BORDER_BOX: 'border-box', // https://caniuse.com/mdn-api_resizeobserverentry_borderboxsize
@@ -41,7 +43,7 @@ const boxOptions = {
  * - `fragment`: index of {@link https://github.com/w3c/csswg-drafts/pull/4529|fragment} of the observed element to measure (default `0`).
  *
  * Optionally pass in a `ResizeObserverEntry` as the second argument to override fetching one from context.
- * 
+ *
  * @example
  * const options = {
  *   widths: {
@@ -50,9 +52,9 @@ const boxOptions = {
  *     1025: 'desktop'
  *   }
  * };
-
+ *
  * const { widthMatch: label } = useBreakpoints(options);
-
+ *
  * return (
  *   <div className={label}>
  *     This element is currently within the {label} range.
@@ -67,56 +69,68 @@ export const useBreakpoints = (
     fragment = 0 // https://github.com/w3c/csswg-drafts/pull/4529
   }: UseBreakpointsOptions = { widths: {}, heights: {} },
   injectResizeObserverEntry?: ExtendedResizeObserverEntry | null
-): UseBreakpointsResult => {
+) => {
+  const isMounted = useRef<Boolean>(true);
+  const matches = useRef<Matches>({ widthMatch: undefined, heightMatch: undefined });
+  const [changedMatches, changeMatches] = useState<Matches>({ widthMatch: undefined, heightMatch: undefined });
+
+  /* Prevent further observation state changes if component is no longer mounted. */
+  useEffect(() => {
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
+  const result = useMemo(() => {
+    /* Support both array and object destructuring. */
+    const result = [changedMatches.widthMatch, changedMatches.heightMatch] as UseBreakpointsResult;
+    result.widthMatch = changedMatches.widthMatch;
+    result.heightMatch = changedMatches.heightMatch;
+
+    return result;
+  }, [changedMatches.widthMatch, changedMatches.heightMatch]);
+
   const resizeObserverEntry = useResizeObserverEntry(injectResizeObserverEntry);
 
-  const [widthMatch, setWidthMatch] = useState<number | undefined>(undefined);
-  const [heightMatch, setHeightMatch] = useState<number | undefined>(undefined);
+  if (!resizeObserverEntry) return result;
 
-  let boxSize: ResizeObserverSize,
-    inlineSize: number = 0,
-    blockSize: number = 0;
+  let observedBoxSize: ResizeObserverSize;
 
-  if (resizeObserverEntry) {
-    switch (box) {
-      case boxOptions.BORDER_BOX:
-        boxSize = resizeObserverEntry.borderBoxSize[fragment] || resizeObserverEntry.borderBoxSize;
-        inlineSize = boxSize.inlineSize;
-        blockSize = boxSize.blockSize;
-        break;
+  switch (box) {
+    case boxOptions.BORDER_BOX:
+      observedBoxSize = resizeObserverEntry.borderBoxSize[fragment] || resizeObserverEntry.borderBoxSize;
+      break;
 
-      case boxOptions.CONTENT_BOX:
-        boxSize = resizeObserverEntry.contentBoxSize[fragment] || resizeObserverEntry.contentBoxSize;
-        inlineSize = boxSize.inlineSize;
-        blockSize = boxSize.blockSize;
-        break;
+    case boxOptions.CONTENT_BOX:
+      observedBoxSize = resizeObserverEntry.contentBoxSize[fragment] || resizeObserverEntry.contentBoxSize;
+      break;
 
-      case boxOptions.DEVICE_PIXEL_CONTENT_BOX:
-        if (typeof resizeObserverEntry.devicePixelContentBoxSize !== 'undefined') {
-          boxSize =
-            resizeObserverEntry.devicePixelContentBoxSize[fragment] || resizeObserverEntry.devicePixelContentBoxSize;
-          inlineSize = boxSize.inlineSize;
-          blockSize = boxSize.blockSize;
-        } else {
-          throw Error('resizeObserverEntry does not contain devicePixelContentBoxSize.');
-        }
-        break;
+    case boxOptions.DEVICE_PIXEL_CONTENT_BOX:
+      if (typeof resizeObserverEntry.devicePixelContentBoxSize !== 'undefined') {
+        observedBoxSize =
+          resizeObserverEntry.devicePixelContentBoxSize[fragment] || resizeObserverEntry.devicePixelContentBoxSize;
+      } else {
+        throw Error('resizeObserverEntry does not contain devicePixelContentBoxSize.');
+      }
+      break;
 
-      default:
-        inlineSize = resizeObserverEntry.contentRect.width;
-        blockSize = resizeObserverEntry.contentRect.height;
-    }
+    default:
+      observedBoxSize = {
+        inlineSize: resizeObserverEntry.contentRect.width,
+        blockSize: resizeObserverEntry.contentRect.height
+      };
   }
 
-  useEffect(() => {
-    setWidthMatch(findBreakpoint(widths, inlineSize));
-    setHeightMatch(findBreakpoint(heights, blockSize));
-  }, [widths, inlineSize, heights, blockSize]);
+  const widthMatch = findBreakpoint(widths, observedBoxSize.inlineSize);
+  const heightMatch = findBreakpoint(heights, observedBoxSize.blockSize);
 
-  /* Support both array and object destructuring. */
-  const result = [widthMatch, heightMatch] as UseBreakpointsResult;
-  result.widthMatch = widthMatch;
-  result.heightMatch = heightMatch;
+  if (widthMatch !== matches.current.widthMatch || heightMatch !== matches.current.heightMatch) {
+    matches.current = { widthMatch, heightMatch };
+
+    if (isMounted.current) {
+      changeMatches({ widthMatch, heightMatch });
+    }
+  }
 
   return result;
 };
