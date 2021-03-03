@@ -15,7 +15,7 @@ interface RenderOptions {
 
 interface BaseObserveProps {
   box?: ResizeObserverBoxOptions;
-  breakpoints: UseBreakpointsOptions;
+  breakpoints?: UseBreakpointsOptions;
 }
 
 interface ObserveViaRenderProp extends BaseObserveProps {

@@ -65,7 +65,7 @@ export const useBreakpoints = (
     heights = {},
     box = undefined,
     fragment = 0 // https://github.com/w3c/csswg-drafts/pull/4529
-  }: UseBreakpointsOptions,
+  }: UseBreakpointsOptions = { widths: {}, heights: {} },
   injectResizeObserverEntry?: ExtendedResizeObserverEntry | null
 ): UseBreakpointsResult => {
   const resizeObserverEntry = useResizeObserverEntry(injectResizeObserverEntry);
