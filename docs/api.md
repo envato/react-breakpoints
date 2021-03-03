@@ -2,15 +2,15 @@
 
 Common usage:
 
-* [`<Provider>`](#provider)
-* [`<Observe>`](#observe)
-* [`useBreakpoints()`](#usebreakpoints)
+- [`<Provider>`](#provider)
+- [`<Observe>`](#observe)
+- [`useBreakpoints()`](#usebreakpoints)
 
 Advanced usage:
 
-* [`<Context>`](#context)
-* [`useResizeObserver()`](#useresizeobserver)
-* [`useResizeObserverEntry()`](#useresizeobserverentry)
+- [`<Context>`](#context)
+- [`useResizeObserver()`](#useresizeobserver)
+- [`useResizeObserverEntry()`](#useresizeobserverentry)
 
 ---
 
@@ -33,6 +33,7 @@ Your app must include a `<Provider>`. It creates a React context with a `ResizeO
 <summary><big><code>ponyfill</code></big> — <small>optional <code>ResizeObserver</code> constructor</small></summary>
 
 ⚠️ **Caution** — `Provider` instantiates a `window.ResizeObserver` by default. [`window.ResizeObserver` currently has weak browser support](https://caniuse.com/#feat=mdn-api_resizeobserver_resizeobserver). You may pass a `ResizeObserver` constructor to `Provider` to use instead of `window.ResizeObserver`. I recommend [ponyfilling](https://ponyfill.com) using [`@juggle/resize-observer`](https://github.com/juggle/resize-observer). You can also [monkey patch](https://en.wikipedia.org/wiki/Monkey_patch) `window.ResizeObserver` and use `Provider` without the `ponyfill` prop.
+
 </details>
 
 ## Usage
@@ -41,11 +42,7 @@ Your app must include a `<Provider>`. It creates a React context with a `ResizeO
 import { Provider as ResizeObserverProvider } from '@envato/react-breakpoints';
 import { ResizeObserver } from '@juggle/resize-observer'; // Ponyfill
 
-const App = () => (
-  <ResizeObserverProvider ponyfill={ResizeObserver}>
-    ...
-  </ResizeObserverProvider>
-);
+const App = () => <ResizeObserverProvider ponyfill={ResizeObserver}>...</ResizeObserverProvider>;
 ```
 
 ---
@@ -54,7 +51,7 @@ const App = () => (
 
 You can observe size changes of an element's `box` by rendering it through `<Observe>`'s `render` prop. Your render function receives a `observedElementProps` argument that you spread onto the DOM element you wish to observe. It also receives `widthMatch` and `heightMatch` arguments which match the values you assigned via `<Observe>`'s `breakpoints` prop.
 
-⚠️ **Important** — There is an important distinction between the `box` you observe and the `box` you consume for triggering breakpoints. See [Observing vs. Consuming Boxes](boxes.md) for more information.
+⚠️ **Important** — There is an important distinction between the `ResizeObserverSize` you observe and the `ResizeObserverSize` you consume for triggering breakpoints. See [Observing vs. Consuming `ResizeObserverSize`](boxSizes.md) for more information.
 
 ## Reference guide
 
@@ -115,19 +112,21 @@ Depending on your implementation of `ResizeObserver`, the [internal `ResizeObser
 
 This library supports observing the following `box` options (but your browser may not!):
 
-* [`'border-box'`](https://caniuse.com/#feat=mdn-api_resizeobserverentry_borderboxsize)
-* [`'content-box'`](https://caniuse.com/#feat=mdn-api_resizeobserverentry_contentboxsize)
-* [`'device-pixel-content-box'`](https://github.com/w3c/csswg-drafts/issues/3554)
+- [`'border-box'`](https://caniuse.com/#feat=mdn-api_resizeobserverentry_borderboxsize)
+- [`'content-box'`](https://caniuse.com/#feat=mdn-api_resizeobserverentry_contentboxsize)
+- [`'device-pixel-content-box'`](https://github.com/w3c/csswg-drafts/issues/3554)
 
 If `box` is left `undefined` or set to any value other than those listed above, `<Observe>` will default to using information from `ResizeObserverEntry.contentRect`.
 
-⚠️ **Important** — There is an important distinction between the `box` you observe and the `box` you consume for triggering breakpoints. See [Observing vs. Consuming Boxes](boxes.md) for more information.
+⚠️ **Important** — There is an important distinction between the `ResizeObserverSize` you observe and the `ResizeObserverSize` you consume for triggering breakpoints. See [Observing vs. Consuming `ResizeObserverSize`](boxSizes.md) for more information.
+
 </details>
 
 <details>
 <summary><big><code>breakpoints</code></big> — <small>optional <code>Object</code></small></summary>
 
 This prop accepts an object with a shape identical to the `options` object of [`useBreakpoints()`](#usebreakpoints).
+
 </details>
 
 <details>
@@ -135,14 +134,15 @@ This prop accepts an object with a shape identical to the `options` object of [`
 
 A render prop that takes a function with three arguments.
 
-* `observedElementProps` — <small><code>Object</code></small>  
+- `observedElementProps` — <small><code>Object</code></small>  
   Using the `...` spread operator, you apply this object to the DOM element you want to observe.
-* `widthMatch` — <small><code>any</code></small>  
+- `widthMatch` — <small><code>any</code></small>  
   If you passed an object with a `widths` property to the `breakpoints` prop, this argument contains the currently matching width breakpoint value.
-* `heightMatch` — <small><code>any</code></small>  
+- `heightMatch` — <small><code>any</code></small>  
   If you passed an object with a `heights` property to the `breakpoints` prop, this argument contains the currently matching height breakpoint value.
 
 Your function should at least return some JSX with `{...observedElementProps}` applied to a DOM element.
+
 </details>
 
 ## Usage
@@ -171,13 +171,10 @@ const MyObservingComponent = () => (
       <>
         {/* this element is given a class based on a child sidebar's width */}
         <article className={widthMatch}>
-
           {/* this sidebar is observed */}
           <aside {...observedElementProps}>
-
             {/* this component uses `useBreakpoints()` to adapt to the sidebar's size */}
             <MyResponsiveComponent />
-
           </aside>
 
           {/* this component receives one of the `heights` strings defined above based on the sidebar's height */}
@@ -214,33 +211,35 @@ const [
 
   /* second element is the matched value from `heights` */
   heightValue
-] = useBreakpoints({
-  /* (optional) target a box size of the observed element to match widths and heights on */
-  box: 'border-box',
+] = useBreakpoints(
+  {
+    /* (optional) target a box size of the observed element to match widths and heights on */
+    box: 'border-box',
 
-  /* (optional) must be specified if `heights` is not specified */
-  widths: {
-    /* keys must be numbers and are treated like CSS's @media (min-width) */
-    0: 'small', /* value can be of any type */
-    769: 'medium',
-    1025: 'large'
+    /* (optional) must be specified if `heights` is not specified */
+    widths: {
+      /* keys must be numbers and are treated like CSS's @media (min-width) */
+      0: 'small' /* value can be of any type */,
+      769: 'medium',
+      1025: 'large'
+    },
+
+    /* (optional) must be specified if `widths` is not specified */
+    heights: {
+      /* keys must be numbers and are treated like CSS's @media (min-height) */
+      0: 'SD' /* value can be of any type */,
+      720: 'HD Ready',
+      1080: 'Full HD',
+      2160: '4K'
+    },
+
+    /* (optional) the box size fragment index to match widths and heights on (default 0) */
+    fragment: 0
   },
 
-  /* (optional) must be specified if `widths` is not specified */
-  heights: {
-    /* keys must be numbers and are treated like CSS's @media (min-height) */
-    0: 'SD', /* value can be of any type */
-    720: 'HD Ready',
-    1080: 'Full HD',
-    2160: '4K'
-  },
-
-  /* (optional) the box size fragment index to match widths and heights on (default 0) */
-  fragment: 0
-},
-
-/* (optional) a ResizeObserverEntry to use instead of the one provided on context */
-injectResizeObserverEntry);
+  /* (optional) a ResizeObserverEntry to use instead of the one provided on context */
+  injectResizeObserverEntry
+);
 ```
 
 <details>
@@ -250,13 +249,14 @@ Depending on your implementation of `ResizeObserver`, the [internal `ResizeObser
 
 This library supports the following `box` options (but your browser may not!):
 
-* [`'border-box'`](https://caniuse.com/#feat=mdn-api_resizeobserverentry_borderboxsize)
-* [`'content-box'`](https://caniuse.com/#feat=mdn-api_resizeobserverentry_contentboxsize)
-* [`'device-pixel-content-box'`](https://github.com/w3c/csswg-drafts/issues/3554)
+- [`'border-box'`](https://caniuse.com/#feat=mdn-api_resizeobserverentry_borderboxsize)
+- [`'content-box'`](https://caniuse.com/#feat=mdn-api_resizeobserverentry_contentboxsize)
+- [`'device-pixel-content-box'`](https://github.com/w3c/csswg-drafts/issues/3554)
 
 If `box` is left `undefined` or set to any value other than those listed above, `useBreakpoints()` will default to using information from `ResizeObserverEntry.contentRect`.
 
-⚠️ **Important** — There is an important distinction between the `box` you observe and the `box` you consume for triggering breakpoints. See [Observing vs. Consuming Boxes](boxes.md) for more information.
+⚠️ **Important** — There is an important distinction between the `ResizeObserverSize` you observe and the `ResizeObserverSize` you consume for triggering breakpoints. See [Observing vs. Consuming `ResizeObserverSize`](boxSizes.md) for more information.
+
 </details>
 
 <details>
@@ -313,6 +313,7 @@ const [Component] = useBreakpoints({
   }
 });
 ```
+
 </details>
 
 <details>
@@ -334,6 +335,7 @@ heights: {
 ⚠️ **Caution**: If you do not provide `0` as a key for `heights`, you risk receiving `undefined` as a return value. This is intended behaviour, but makes it difficult to distinguish between receiving `undefined` because of a [Server-Side Rendering](server-side-rendering.md) scenario, or because the observed height is less than the next matching height.
 
 Values can be of _any_ type, you are not restricted to return `string` values. See example in `widths` section above.
+
 </details>
 
 <details>
@@ -342,12 +344,14 @@ Values can be of _any_ type, you are not restricted to return `string` values. S
 The box sizes are exposed as sequences in order to support elements that have multiple fragments, which occur in multi-column scenarios. You can specify which fragment's size information to use for matching `widths` and `heights` by setting this prop. Defaults to the first fragment.
 
 See the [W3C Editor's Draft](https://drafts.csswg.org/resize-observer-1/#resize-observer-entry-interface) for more information about fragments.
+
 </details>
 
 <details>
 <summary><big><code>injectResizeObserverEntry</code></big> — <small>optional <code>ResizeObserverEntry</code></small></summary>
 
 Allows you to force `useBreakpoints()` to use the `ResizeObserverEntry` you pass here in its calculations rather than retrieving the entry that's on the closest [`<Context>`](#context).
+
 </details>
 
 ## Usage
@@ -366,11 +370,7 @@ const MyResponsiveComponent = () => {
 
   const [label] = useBreakpoints(options);
 
-  return (
-    <div className={label}>
-      This element is currently within the {label} range.
-    </div>
-  );
+  return <div className={label}>This element is currently within the {label} range.</div>;
 };
 ```
 
@@ -389,15 +389,17 @@ const MyResponsiveComponent = () => {
 ## Usage
 
 `parent.js`
+
 ```javascript
 import { Context } from '@envato/react-breakpoints';
 
 <Context.Provider value={myResizeObserverEntry}>
   /* children with access to `myResizeObserverEntry` */
-</Context.Provider>
+</Context.Provider>;
 ```
 
 `child.js`
+
 ```javascript
 import { useContext } from 'react';
 import { Context } from '@envato/react-breakpoints';
@@ -415,8 +417,9 @@ const MyChildComponent = () => {
 # `useResizeObserver()`
 
 ⚠️ **Advanced usage** — This hook is used internally in [`<Observe>`](#observe) to:
-* start and stop observing an element by passing a `ref` to a DOM element;
-* bind a standardised callback to all observations, and set the `observedEntry` on a [`<Context>`](#context).
+
+- start and stop observing an element by passing a `ref` to a DOM element;
+- bind a standardised callback to all observations, and set the `observedEntry` on a [`<Context>`](#context).
 
 This hook takes an optional `options` object argument, which currently only supports a `box` option.
 
@@ -445,11 +448,12 @@ Depending on your implementation of `ResizeObserver`, you may observe one of mul
 
 This library supports the following `box` options (but your browser may not!):
 
-* [`'border-box'`](https://caniuse.com/#feat=mdn-api_resizeobserverentry_borderboxsize)
-* [`'content-box'`](https://caniuse.com/#feat=mdn-api_resizeobserverentry_contentboxsize)
-* [`'device-pixel-content-box'`](https://github.com/w3c/csswg-drafts/issues/3554)
+- [`'border-box'`](https://caniuse.com/#feat=mdn-api_resizeobserverentry_borderboxsize)
+- [`'content-box'`](https://caniuse.com/#feat=mdn-api_resizeobserverentry_contentboxsize)
+- [`'device-pixel-content-box'`](https://github.com/w3c/csswg-drafts/issues/3554)
 
-⚠️ **Important** — There is an important distinction between the `box` you observe and the `box` you consume for triggering breakpoints. See [Observing vs. Consuming Boxes](boxes.md) for more information.
+⚠️ **Important** — There is an important distinction between the `ResizeObserverSize` you observe and the `ResizeObserverSize` you consume for triggering breakpoints. See [Observing vs. Consuming `ResizeObserverSize`](boxSizes.md) for more information.
+
 </details>
 
 ## Usage
@@ -481,7 +485,7 @@ const MyObservedComponent = () => {
       <div ref={ref}>This is an observed element</div>
     </Context.Provider>
   );
-}
+};
 ```
 
 ⚠️ **Hint** — This is for when you really need advanced behaviour. This is completely abstracted away for your convenience by [`<Observe>`](#observe).
@@ -504,22 +508,17 @@ const resizeObserverEntry = useResizeObserverEntry(
 const fragmentIndex = 0;
 
 /* retrieve width and height from legacy `contentRect` property */
-const {
-  contentRectWidth: width,
-  contentRectHeight: height
-} = resizeObserverEntry.contentRect;
+const { contentRectWidth: width, contentRectHeight: height } = resizeObserverEntry.contentRect;
 
 /* retrieve width and height from `borderBoxSize` property of first fragment */
-const {
-  borderBoxSizeWidth: inlineSize,
-  borderBoxSizeHeight: blockSize
-} = resizeObserverEntry.borderBoxSize[fragmentIndex];
+const { borderBoxSizeWidth: inlineSize, borderBoxSizeHeight: blockSize } = resizeObserverEntry.borderBoxSize[
+  fragmentIndex
+];
 
 /* retrieve width and height from `contentBoxSize` property of first fragment */
-const {
-  contentBoxSizeWidth: inlineSize,
-  contentBoxSizeHeight: blockSize
-} = resizeObserverEntry.contentBoxSize[fragmentIndex];
+const { contentBoxSizeWidth: inlineSize, contentBoxSizeHeight: blockSize } = resizeObserverEntry.contentBoxSize[
+  fragmentIndex
+];
 
 /* retrieve width and height from `devicePixelContentBoxSize` property of first fragment */
 const {
@@ -540,13 +539,15 @@ const MyResponsiveComponent = () => {
    * Falsey if element from Context has not been observed yet.
    * This is mostly the case when doing Server-Side Rendering.
    */
-  if (!resizeObserverEntry) { /* ... */ };
+  if (!resizeObserverEntry) {
+    /* ... */
+  }
 
   const { inlineSize: width, blockSize: height } = resizeObserverEntry.borderBoxSize[0];
 
   let className;
 
-  if (width >= 1025 ) {
+  if (width >= 1025) {
     className = 'large';
   } else if (width >= 769) {
     className = 'medium';
@@ -555,11 +556,9 @@ const MyResponsiveComponent = () => {
   }
 
   return (
-    <div className={className}>
-      {/* this element's className changes based on its observed border-box width */}
-    </div>
-  )
-}
+    <div className={className}>{/* this element's className changes based on its observed border-box width */}</div>
+  );
+};
 ```
 
 ⚠️ **Hint** — You probably don't need this hook, because [`useBreakpoints()`](#usebreakpoints) abstracts the above implementation away for your convenience. You'll likely only need this hook if you need a property from `ResizeObserverEntry` which is not `contentRect` or one of `box`'s options.
