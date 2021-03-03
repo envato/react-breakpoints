@@ -100,7 +100,7 @@ See the [API Docs](/docs/api.md) for reference guides and usage examples.
 
 # Observing vs. Consuming `ResizeObserverSize`
 
-There is an important distinction between the `ResizeObserverSize` you observe and the `ResizeObserverSize` you consume for triggering breakpoints. See [Observing vs. Consuming `ResizeObserverSize`](/docs/boxSizes.md) for more information.
+There is an important distinction between the `boxSize` you observe and the `boxSize` you pass to your breakpoints. See [Observing vs. Consuming `ResizeObserverSize`](/docs/boxSizes.md) for more information.
 
 # Server-Side Rendering
 

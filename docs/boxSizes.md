@@ -1,6 +1,6 @@
 # Observing vs. Consuming `ResizeObserverSize`
 
-There is an important distinction between the `boxSize` you observe and the `boxSize` you consume for triggering breakpoints.
+There is an important distinction between the `boxSize` you observe and the `boxSize` you pass to your breakpoints.
 
 > You can observe a `boxSize` on an element, and then respond to changes in **another** `boxSize` of that same element.
 

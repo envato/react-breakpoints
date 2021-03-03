@@ -51,7 +51,7 @@ const App = () => <ResizeObserverProvider ponyfill={ResizeObserver}>...</ResizeO
 
 You can observe size changes of an element's `box` by rendering it through `<Observe>`'s `render` prop. Your render function receives a `observedElementProps` argument that you spread onto the DOM element you wish to observe. It also receives `widthMatch` and `heightMatch` arguments which match the values you assigned via `<Observe>`'s `breakpoints` prop.
 
-⚠️ **Important** — There is an important distinction between the `ResizeObserverSize` you observe and the `ResizeObserverSize` you consume for triggering breakpoints. See [Observing vs. Consuming `ResizeObserverSize`](boxSizes.md) for more information.
+⚠️ **Important** — There is an important distinction between the `boxSize` you observe and the `boxSize` you pass to your breakpoints. See [Observing vs. Consuming `ResizeObserverSize`](boxSizes.md) for more information.
 
 ## Reference guide
 
@@ -118,7 +118,7 @@ This library supports observing the following `box` options (but your browser ma
 
 If `box` is left `undefined` or set to any value other than those listed above, `<Observe>` will default to using information from `ResizeObserverEntry.contentRect`.
 
-⚠️ **Important** — There is an important distinction between the `ResizeObserverSize` you observe and the `ResizeObserverSize` you consume for triggering breakpoints. See [Observing vs. Consuming `ResizeObserverSize`](boxSizes.md) for more information.
+⚠️ **Important** — There is an important distinction between the `boxSize` you observe and the `boxSize` you pass to your breakpoints. See [Observing vs. Consuming `ResizeObserverSize`](boxSizes.md) for more information.
 
 </details>
 
@@ -255,7 +255,7 @@ This library supports the following `box` options (but your browser may not!):
 
 If `box` is left `undefined` or set to any value other than those listed above, `useBreakpoints()` will default to using information from `ResizeObserverEntry.contentRect`.
 
-⚠️ **Important** — There is an important distinction between the `ResizeObserverSize` you observe and the `ResizeObserverSize` you consume for triggering breakpoints. See [Observing vs. Consuming `ResizeObserverSize`](boxSizes.md) for more information.
+⚠️ **Important** — There is an important distinction between the `boxSize` you observe and the `boxSize` you pass to your breakpoints. See [Observing vs. Consuming `ResizeObserverSize`](boxSizes.md) for more information.
 
 </details>
 
@@ -452,7 +452,7 @@ This library supports the following `box` options (but your browser may not!):
 - [`'content-box'`](https://caniuse.com/#feat=mdn-api_resizeobserverentry_contentboxsize)
 - [`'device-pixel-content-box'`](https://github.com/w3c/csswg-drafts/issues/3554)
 
-⚠️ **Important** — There is an important distinction between the `ResizeObserverSize` you observe and the `ResizeObserverSize` you consume for triggering breakpoints. See [Observing vs. Consuming `ResizeObserverSize`](boxSizes.md) for more information.
+⚠️ **Important** — There is an important distinction between the `boxSize` you observe and the `boxSize` you pass to your breakpoints. See [Observing vs. Consuming `ResizeObserverSize`](boxSizes.md) for more information.
 
 </details>
 
