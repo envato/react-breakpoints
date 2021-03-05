@@ -5,7 +5,6 @@
 <h1 align="center">React Breakpoints</h1>
 
 <p align="center">
-  <img alt="dependent repositories" src="https://img.shields.io/librariesio/dependent-repos/npm/@envato/react-breakpoints?label=Used%20by&style=for-the-badge" />
   <img alt="npm version" src="https://img.shields.io/npm/v/@envato/react-breakpoints?style=for-the-badge" />
   <img alt="react version" src="https://img.shields.io/npm/dependency-version/@envato/react-breakpoints/peer/react?style=for-the-badge">
   <img alt="license" src="https://img.shields.io/npm/l/@envato/react-breakpoints?style=for-the-badge" />
@@ -96,6 +95,12 @@ There is an important distinction between the `boxSize` you observe and the `box
 Using [`useResizeObserver()`](/docs/api.md#useresizeobserver), [`useResizeObserverEntry()`](/docs/api.md#useresizeobserverentry) or [`useBreakpoints()`](/docs/api.md#usebreakpoints) in your components causes them to re-render **every time a resize is observed**.
 
 In some cases, you may want to optimise this. If you only want to re-render your components when the returned breakpoint values actually change, use `React.useMemo` or `React.memo`.
+
+# Re-rendering
+
+Using [`useResizeObserver()`](/docs/api.md#useresizeobserver), [`useResizeObserverEntry()`](/docs/api.md#useresizeobserverentry) or [`useBreakpoints()`](/docs/api.md#usebreakpoints) in your components causes them to re-render **every time a resize is observed**.
+
+In some cases, you may want to optimise this. If you only want to re-render your components when breakpoint values actually change, use `React.useMemo` or `React.memo`.
 
 # Server-Side Rendering
 
