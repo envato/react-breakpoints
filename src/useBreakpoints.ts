@@ -98,17 +98,16 @@ export const useBreakpoints = (
 
   switch (box) {
     case boxOptions.BORDER_BOX:
-      observedBoxSize = resizeObserverEntry.borderBoxSize[fragment] || resizeObserverEntry.borderBoxSize;
+      observedBoxSize = resizeObserverEntry.borderBoxSize[fragment];
       break;
 
     case boxOptions.CONTENT_BOX:
-      observedBoxSize = resizeObserverEntry.contentBoxSize[fragment] || resizeObserverEntry.contentBoxSize;
+      observedBoxSize = resizeObserverEntry.contentBoxSize[fragment];
       break;
 
     case boxOptions.DEVICE_PIXEL_CONTENT_BOX:
       if (typeof resizeObserverEntry.devicePixelContentBoxSize !== 'undefined') {
-        observedBoxSize =
-          resizeObserverEntry.devicePixelContentBoxSize[fragment] || resizeObserverEntry.devicePixelContentBoxSize;
+        observedBoxSize = resizeObserverEntry.devicePixelContentBoxSize[fragment];
       } else {
         throw Error('resizeObserverEntry does not contain devicePixelContentBoxSize.');
       }
