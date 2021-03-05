@@ -3,9 +3,8 @@
   "version": "1.0.3",
   "description": "Respond to changes in a DOM element's size. With React Breakpoints, element queries are no longer \"web design's unicorn\" 🦄",
   "main": "dist/index.js",
-  "types": "src/index.d.ts",
   "scripts": {
-    "build": "babel src/ -d dist/ --source-maps",
+    "build": "tsc -b",
     "prepare": "npm run build"
   },
   "repository": {
@@ -13,6 +12,11 @@
     "url": "git+https://github.com/envato/react-breakpoints.git"
   },
   "keywords": [
+    "resize-observer",
+    "media-queries",
+    "element-queries",
+    "container-queries",
+    "breakpoints",
     "react-hooks",
     "hooks",
     "react",
@@ -28,18 +32,52 @@
   },
   "homepage": "https://github.com/envato/react-breakpoints#readme",
   "peerDependencies": {
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react": "16.8 - 17",
+    "react-dom": "16.8 - 17"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.8.6",
-    "@babel/preset-env": "^7.7.7",
-    "@babel/preset-react": "^7.8.3",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "@types/react": "^17.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.13.0",
+    "@typescript-eslint/parser": "^4.13.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.17.0",
+    "eslint-config-react-app": "^6.0.0",
+    "eslint-plugin-flowtype": "^5.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "husky": "^4.3.7",
+    "lint-staged": "^10.5.3",
+    "prettier": "^2.2.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "typescript": "^4.2.2"
   },
   "dependencies": {
-    "@envato/react-resize-observer-hook": "^1.0.1"
+    "@envato/react-resize-observer-hook": "^1.2.0"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*.{js,ts,tsx}": [
+      "eslint --cache --fix",
+      "prettier --write"
+    ]
+  },
+  "prettier": {
+    "arrowParens": "avoid",
+    "jsxSingleQuote": true,
+    "printWidth": 120,
+    "quoteProps": "preserve",
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "none"
   }
 }
