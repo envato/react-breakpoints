@@ -16,25 +16,32 @@
 
 `react-breakpoints` allows you to respond to changes in a DOM element's size. You can change the evaluated logic and rendered output of components based on observed size changes in DOM elements. For example, you can change a dropdown menu to a horizontal list menu based on its parent container's width without using CSS media queries.
 
-## 📦 What's in the box?
+# 📦 What's in the box?
 
 > No polling. No event listening. No sentinel elements. **Just a [`ResizeObserver`](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver)!**
 
 This package provides you with:
 
-- a [`<Provider>`](/docs/api.md#provider) to instantiate the ResizeObserver;
-- an [`<Observe>`](/docs/api.md#observe) component to observe changes in a DOM element;
-- a [`useBreakpoints()`](/docs/api.md#usebreakpoints) hook to change a component's behaviour based on the observed size information in the nearest parent `<Observe>`.
+- a [`<Provider>`](/docs/api.md#provider) to instantiate the `ResizeObserver`;
+- an [`<Observe>`](/docs/api.md#observe) component to observe changes in a DOM element and respond to them.
 
 For power users this package also provides:
 
-- a [`<Context>`](/docs/api.md#context) on which you can assign a `ResizeObserverEntry` value to update any nested components that are using `useBreakpoints()`;
+- a [`useBreakpoints()`](/docs/api.md#usebreakpoints) hook to change a component's behaviour based on the observed size information in the nearest parent `<Observe>`;
 - a [`useResizeObserver()`](/docs/api.md#useresizeobserver) hook to connect a DOM element in your component to the instantiated `ResizeObserver` on `<Provider>`;
 - a [`useResizeObserverEntry()`](/docs/api.md#useresizeobserverentry) hook to retrieve the `ResizeObserverEntry` put on the nearest `<Context>`. This is what `useBreakpoints()` uses under the hood.
 
-# 🚧 Developer status
+# 🐉 Be careful using this package when&hellip;
 
-Several projects within Envato are currently using this package, giving me confidence that the API is clear and the code adds value. The package is still in an early stage, but exposure to "the wild" will help reveal more edge-cases and hopefully make the package more robust overall.
+- &hellip;all you want is the low-level API stuff. See [@envato/react-resize-observer-hook](https://github.com/envato/react-resize-observer-hook).
+- &hellip;you want _real_ CSS Element Queries. At the end of the day, this is still a JS solution.
+- &hellip;you care deeply about [Cumulative Layout Shift](https://web.dev/cls/) on public pages. **Keep reading though, this package may still be of value to you!**
+
+# 🏅 This package is _really good_ at&hellip;
+
+- &hellip;following the latest [draft spec](https://drafts.csswg.org/resize-observer/), giving you access to cutting edge features like `devicePixelContentBoxSize` and [per-fragment](https://drafts.csswg.org/css-break-3/) observation.
+- &hellip;performantly observing many elements with a single `ResizeObserver` instance. None of that "a new `ResizeObserver` instance per observed element" bloat that [some](https://github.com/ZeeCoder/use-resize-observer/blob/314b29c33cfcd2c51b8854b775b0a2a5c325d94a/src/index.ts#L151-L157) alternative packages implement.
+- &hellip;building highly-responsive private dashboards 📊. One key thing this package (and every other `ResizeObserver` package out there) can contribute negatively to is [Cumulative Layout Shifting](https://web.dev/cls/). At Envato we've had great success using this package on pages that are only visible after signing in, like our Author Dashboard. We've had less success using it in places where search engines can go, on components with responsive styles that changed the layout vertically. One of our company values is "Tell It Like It Is", so we're letting you know to **be mindful of when and how you use `ResizeObserver` for responsive layouts.**
 
 # ⚡️ Quick start
 
@@ -44,9 +51,9 @@ Follow these **minimum required steps** to get started with `react-breakpoints`.
 npm install @envato/react-breakpoints
 ```
 
-## Set up the provider
+## Wrap your component tree with the provider
 
-```javascript
+```jsx
 import { Provider as ResizeObserverProvider } from '@envato/react-breakpoints';
 
 const App = () => <ResizeObserverProvider>...</ResizeObserverProvider>;
@@ -54,33 +61,12 @@ const App = () => <ResizeObserverProvider>...</ResizeObserverProvider>;
 
 ⚠️ **Caution** — You may need to pass some props to `<Provider>` to increase browser support. Please refer to the [API Docs](/docs/api.md#provider).
 
-## Observe an element
+## Observe an element and use the results
 
-Everything you render through `<Observe>` becomes aware of the size of the element that is given `{...observedElementProps}`. This is called an "Observe Scope".
-
-```javascript
+```jsx
 import { Observe } from '@envato/react-breakpoints';
 
-const MyObservingComponent = () => (
-  <Observe
-    render={({ observedElementProps }) => (
-      <aside {...observedElementProps}>
-        <MyResponsiveComponent />
-      </aside>
-    )}
-  />
-);
-```
-
-## Consume the observation
-
-Components that are rendered within the "Observe Scope" can consume observation results via `useBreakpoints()`:
-
-```javascript
-import { useBreakpoints } from '@envato/react-breakpoints';
-
-const MyResponsiveComponent = () => {
-  const options = {
+const exampleBreakpoints = {
     widths: {
       0: 'mobile',
       769: 'tablet',
@@ -88,19 +74,28 @@ const MyResponsiveComponent = () => {
     }
   };
 
-  const [label] = useBreakpoints(options);
-
-  return <div className={label}>This element is currently within the {label} range.</div>;
-};
+export const ExampleComponent = () => (
+  <Observe breakpoints={exampleBreakpoints}>
+    {({ observedElementProps, widthMatch = 'ssr' }) => (
+      <div {...observedElementProps}>
+        <div className={widthMatch}>
+      </div>
+    )}
+  </Observe>
+);
 ```
-
-However, `<Observe>` supports additional props allowing you to observe **and** consume observations — no `useBreakpoints()` required!
 
 See the [API Docs](/docs/api.md) for reference guides and usage examples.
 
 # Observing vs. Consuming `ResizeObserverSize`
 
 There is an important distinction between the `boxSize` you observe and the `boxSize` you pass to your breakpoints. See [Observing vs. Consuming `ResizeObserverSize`](/docs/boxSizes.md) for more information.
+
+# Re-rendering
+
+Using [`useResizeObserver()`](/docs/api.md#useresizeobserver), [`useResizeObserverEntry()`](/docs/api.md#useresizeobserverentry) or [`useBreakpoints()`](/docs/api.md#usebreakpoints) in your components causes them to re-render **every time a resize is observed**.
+
+In some cases, you may want to optimise this. If you only want to re-render your components when the returned breakpoint values actually change, use `React.useMemo` or `React.memo`.
 
 # Server-Side Rendering
 
