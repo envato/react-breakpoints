@@ -485,13 +485,13 @@ const resizeObserverEntry = useResizeObserverEntry(
 );
 
 /* retrieve width and height from legacy `contentRect` property */
-const { contentRectWidth: width, contentRectHeight: height } = resizeObserverEntry.contentRect;
+const { width: contentRectWidth, height: contentRectHeight } = resizeObserverEntry.contentRect;
 
 /* retrieve width and height from `borderBoxSize` property of first fragment */
-const { borderBoxSizeWidth: inlineSize, borderBoxSizeHeight: blockSize } = resizeObserverEntry.borderBoxSize[0];
+const { inlineSize: borderBoxSizeWidth, blockSize: borderBoxSizeHeight } = resizeObserverEntry.borderBoxSize[0];
 
 /* retrieve width and height from `contentBoxSize` property of first fragment */
-const { contentBoxSizeWidth: inlineSize, contentBoxSizeHeight: blockSize } = resizeObserverEntry.contentBoxSize[0];
+const { inlineSize: contentBoxSizeWidth, blockSize: contentBoxSizeHeight } = resizeObserverEntry.contentBoxSize[0];
 
 /* retrieve width and height from `devicePixelContentBoxSize` property of first fragment */
 const {
