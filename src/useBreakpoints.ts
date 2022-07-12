@@ -32,7 +32,7 @@ const boxOptions = {
 };
 
 /**
- * See API Docs: {@linkcode https://github.com/envato/react-breakpoints/blob/master/docs/api.md#usebreakpoints|useBreakpoints}
+ * See API Docs: {@linkcode https://github.com/envato/react-breakpoints/blob/main/docs/api.md#usebreakpoints useBreakpoints}
  *
  * Pass in an options object with at least one of the following properties:
  * - `widths`: objects with width breakpoints as keys and anything as their values;
@@ -40,7 +40,7 @@ const boxOptions = {
  *
  * You may also pass the following additional optional properties:
  * - `box`: the box to measure on the observed element, one of `'border-box' | 'content-box' | 'device-pixel-content-box'`;
- * - `fragment`: index of {@link https://github.com/w3c/csswg-drafts/pull/4529|fragment} of the observed element to measure (default `0`).
+ * - `fragment`: index of {@link https://github.com/w3c/csswg-drafts/pull/4529 fragment} of the observed element to measure (default `0`).
  *
  * Optionally pass in a `ResizeObserverEntry` as the second argument to override fetching one from context.
  *
