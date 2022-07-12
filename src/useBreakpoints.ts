@@ -28,7 +28,7 @@ export type UseBreakpointsResult = [any, any] & Matches;
 const boxOptions = {
   BORDER_BOX: 'border-box', // https://caniuse.com/mdn-api_resizeobserverentry_borderboxsize
   CONTENT_BOX: 'content-box', // https://caniuse.com/mdn-api_resizeobserverentry_contentboxsize
-  DEVICE_PIXEL_CONTENT_BOX: 'device-pixel-content-box' // https://github.com/w3c/csswg-drafts/pull/4476
+  DEVICE_PIXEL_CONTENT_BOX: 'device-pixel-content-box' // https://caniuse.com/mdn-api_resizeobserverentry_devicepixelcontentboxsize
 };
 
 /**
@@ -106,11 +106,7 @@ export const useBreakpoints = (
       break;
 
     case boxOptions.DEVICE_PIXEL_CONTENT_BOX:
-      if (typeof resizeObserverEntry.devicePixelContentBoxSize !== 'undefined') {
-        observedBoxSize = resizeObserverEntry.devicePixelContentBoxSize[fragment];
-      } else {
-        throw Error('resizeObserverEntry does not contain devicePixelContentBoxSize.');
-      }
+      observedBoxSize = resizeObserverEntry.devicePixelContentBoxSize[fragment];
       break;
 
     default:
