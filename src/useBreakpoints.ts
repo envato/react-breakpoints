@@ -1,6 +1,6 @@
+import type { ExtendedResizeObserverEntry } from '@envato/react-resize-observer-hook';
+import type { Breakpoints } from './Breakpoints';
 import { useRef, useState, useEffect, useMemo } from 'react';
-import { ExtendedResizeObserverEntry } from '@envato/react-resize-observer-hook';
-import { Breakpoints } from './Breakpoints';
 import { useResizeObserverEntry } from './useResizeObserverEntry';
 import { findBreakpoint } from './findBreakpoint';
 
@@ -28,11 +28,11 @@ export type UseBreakpointsResult = [any, any] & Matches;
 const boxOptions = {
   BORDER_BOX: 'border-box', // https://caniuse.com/mdn-api_resizeobserverentry_borderboxsize
   CONTENT_BOX: 'content-box', // https://caniuse.com/mdn-api_resizeobserverentry_contentboxsize
-  DEVICE_PIXEL_CONTENT_BOX: 'device-pixel-content-box' // https://github.com/w3c/csswg-drafts/pull/4476
+  DEVICE_PIXEL_CONTENT_BOX: 'device-pixel-content-box' // https://caniuse.com/mdn-api_resizeobserverentry_devicepixelcontentboxsize
 };
 
 /**
- * See API Docs: {@linkcode https://github.com/envato/react-breakpoints/blob/master/docs/api.md#usebreakpoints|useBreakpoints}
+ * See API Docs: {@linkcode https://github.com/envato/react-breakpoints/blob/main/docs/api.md#usebreakpoints useBreakpoints}
  *
  * Pass in an options object with at least one of the following properties:
  * - `widths`: objects with width breakpoints as keys and anything as their values;
@@ -40,7 +40,7 @@ const boxOptions = {
  *
  * You may also pass the following additional optional properties:
  * - `box`: the box to measure on the observed element, one of `'border-box' | 'content-box' | 'device-pixel-content-box'`;
- * - `fragment`: index of {@link https://github.com/w3c/csswg-drafts/pull/4529|fragment} of the observed element to measure (default `0`).
+ * - `fragment`: index of {@link https://github.com/w3c/csswg-drafts/pull/4529 fragment} of the observed element to measure (default `0`).
  *
  * Optionally pass in a `ResizeObserverEntry` as the second argument to override fetching one from context.
  *
@@ -106,11 +106,7 @@ export const useBreakpoints = (
       break;
 
     case boxOptions.DEVICE_PIXEL_CONTENT_BOX:
-      if (typeof resizeObserverEntry.devicePixelContentBoxSize !== 'undefined') {
-        observedBoxSize = resizeObserverEntry.devicePixelContentBoxSize[fragment];
-      } else {
-        throw Error('resizeObserverEntry does not contain devicePixelContentBoxSize.');
-      }
+      observedBoxSize = resizeObserverEntry.devicePixelContentBoxSize[fragment];
       break;
 
     default:
