@@ -1,7 +1,9 @@
-import { ReactNode } from 'react';
-import { ObservedElement, useResizeObserver } from '@envato/react-resize-observer-hook';
+import type { ReactNode } from 'react';
+import type { ObservedElement } from '@envato/react-resize-observer-hook';
+import type { UseBreakpointsOptions } from './useBreakpoints';
+import { useResizeObserver } from '@envato/react-resize-observer-hook';
 import { Context } from './Context';
-import { UseBreakpointsOptions, useBreakpoints } from './useBreakpoints';
+import { useBreakpoints } from './useBreakpoints';
 
 interface ObservedElementProps {
   ref: React.RefCallback<ObservedElement | null>;

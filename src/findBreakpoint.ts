@@ -1,4 +1,4 @@
-import { Breakpoints } from './Breakpoints';
+import type { Breakpoints } from './Breakpoints';
 
 /**
  * From a `breakpoints` object, find the first key that is equal to or greater than

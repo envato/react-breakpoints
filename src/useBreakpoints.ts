@@ -1,6 +1,6 @@
+import type { ExtendedResizeObserverEntry } from '@envato/react-resize-observer-hook';
+import type { Breakpoints } from './Breakpoints';
 import { useRef, useState, useEffect, useMemo } from 'react';
-import { ExtendedResizeObserverEntry } from '@envato/react-resize-observer-hook';
-import { Breakpoints } from './Breakpoints';
 import { useResizeObserverEntry } from './useResizeObserverEntry';
 import { findBreakpoint } from './findBreakpoint';
 

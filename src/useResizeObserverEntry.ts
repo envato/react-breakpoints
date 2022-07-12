@@ -1,5 +1,5 @@
+import type { ExtendedResizeObserverEntry } from '@envato/react-resize-observer-hook';
 import { useContext } from 'react';
-import { ExtendedResizeObserverEntry } from '@envato/react-resize-observer-hook';
 import { Context } from './Context';
 
 /**
