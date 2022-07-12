@@ -4,6 +4,7 @@
   "description": "Respond to changes in a DOM element's size. With React Breakpoints, element queries are no longer \"web design's unicorn\" 🦄",
   "main": "dist/index.js",
   "scripts": {
+    "compile": "tsc --noEmit",
     "build": "tsc -b",
     "prepare": "npm run build"
   },
